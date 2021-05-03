@@ -9,13 +9,20 @@ v-app#inspire
     v-app-bar-nav-icon(@click='drawer = !drawer')
     v-toolbar-title Application
     v-spacer
-    v-btn(icon)
+    v-btn(icon value='login' to="/login")
       v-icon mdi-login-variant
     v-btn(icon)
       v-icon mdi-heart
     v-btn(icon)
       v-icon mdi-dots-vertical  
   v-navigation-drawer(v-model='drawer' fixed temporary)
+    v-list-item
+      v-list-item-content
+        v-list-item-title.title
+          | Application
+        v-list-item-subtitle
+          | subtext
+    v-divider
     v-list(nav dense)
       v-list-item-group(v-model='group' active-class='deep-purple--text text--accent-4')
         v-list-item(value='home' to="/")
