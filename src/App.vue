@@ -1,25 +1,54 @@
 <template lang='pug'>
-#app
-  img(alt='Vue logo', src='./assets/logo.png')
-  HelloWorld(msg='Welcome to Your Vue.js App')
+v-app#inspire
+  v-system-bar(app)
+    v-spacer
+    v-icon mdi-account-alert
+    v-icon mdi-circle
+    v-icon mdi-triangle
+  v-app-bar(app)
+    v-app-bar-nav-icon(@click='drawer = !drawer')
+    v-toolbar-title Application
+    v-spacer
+    v-btn(icon)
+      v-icon mdi-login-variant
+    v-btn(icon)
+      v-icon mdi-heart
+    v-btn(icon)
+      v-icon mdi-dots-vertical  
+  v-navigation-drawer(v-model='drawer' fixed temporary)
+    v-list(nav dense)
+      v-list-item-group(v-model='group' active-class='deep-purple--text text--accent-4')
+        v-list-item(value='home' to="/")
+          v-list-item-icon
+            v-icon mdi-home
+          v-list-item-title Home
+        v-list-item(value='about' to="/about")
+          v-list-item-icon
+            v-icon mdi-account
+          v-list-item-title Account
+  
+  router-view            
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+   
+  },
+  data: () => ({
+    drawer: false,
+    group: null,
+ }),
 }
 </script>
 <style lang="stylus">
-#app
+#inspire
   font-family 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
-  text-align center
+  text-align left
   color #2c3e50
-  margin-top 60px
+  
 </style>

@@ -1,5 +1,8 @@
-<template>
-  <hello-world />
+<template lang='pug'>
+  v-main.grey.lighten-2
+    v-container
+      v-row
+        hello-world
 </template>
 
 <script>
