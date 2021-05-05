@@ -30,7 +30,7 @@ v-main.grey.lighten-2
           v-divider            
           v-card-actions 
             v-subheader  DON'T HAVE AN ACCOUNT?   
-            v-btn(color='indigo lighten-2' to="about" elevation="3") SIGN UP 
+            v-btn(color='indigo lighten-2' to="signup" elevation="3") SIGN UP 
            
            
 </template>
