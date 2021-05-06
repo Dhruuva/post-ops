@@ -40,8 +40,8 @@ v-main.grey.lighten-2
     data: () => ({
       show: false,
       text: "Ole",
-      name: "alekseybazhenov@gmail.com",
-      pwd: "sddgdgdfgA2"
+      name: "todhruva@mail.ru",
+      pwd: "qwerexQ1"
     }),
     methods: {
       async login (){

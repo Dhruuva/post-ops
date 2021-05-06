@@ -76,9 +76,9 @@ exports.refresh_token = (req, res) => {
 
 exports.registerUser = (req, res) => {
   // Form validation
-
+  console.log(" registerUser ", req.body)
   const { errors, isValid } = validateRegisterInput(req.body);
-
+  console.log(" registerUser ",errors, isValid)
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);

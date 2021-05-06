@@ -7,10 +7,10 @@ v-main.grey.lighten-2
           v-toolbar-title Login form 
         v-card-text   
           v-form(align="center" justify="center" ref='form' lazy-validation)
-            v-text-field(label='Name' name='name' prepend-icon='mdi-account' type='text' :rules='nameRules' required)
-            v-text-field(label='Email' name='email' prepend-icon='mdi-email' type='text' :rules='emailRules' required)  
-            v-text-field( v-model="password" label='Password' name='password' prepend-icon='mdi-lock' type='password' required hint="At least 6 characters" :rules='[minRules,passwordRules]' )
-            v-text-field( v-model="rePassword" label="Re-enter Password" name='repeat' prepend-icon='mdi-lock' required :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show1 = !show1" :rules='[minRules,passwordConfirmationRule]') 
+            v-text-field( v-model="name" label='Name' name='name' prepend-icon='mdi-account' type='text' :rules='nameRules' required)
+            v-text-field( v-model="email" label='Email' name='email' prepend-icon='mdi-email' type='text' :rules='emailRules' required)  
+            v-text-field( v-model="password" label='Password' name='password' prepend-icon='mdi-lock' type='password' required hint="At least 6 characters" :rules='minRules' )
+            v-text-field( v-model="rePassword" label="Re-enter Password" name='repeat' prepend-icon='mdi-lock' required :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show1 = !show1" :rules='repeatPasswordRules') 
             v-checkbox(v-model='agCheckbox' :rules="[v => !!v || 'You must agree to continue!']" label='I agree with Terms and Conditions' required )
         v-card-actions.mt-n5
           v-btn.flex(color='orange lighten-2' elevation="12"  @click="submitForm") Register
@@ -38,6 +38,8 @@ v-main.grey.lighten-2
       password:'',
       rePassword:'',
       agCheckbox:false,
+      name: "",
+      email: "",
       show1:false,
       nameRules: [
           v => !!v || 'Name is required',
@@ -52,17 +54,43 @@ v-main.grey.lighten-2
           v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'Password must contain at least lowercase letter, one number, a special character and one uppercase letter',
         ],
        minRules: [
-           v =>( v && v.length >= 6) || 'Name must be more than 6 characters',
+           v =>( v && v.length >= 6) || ' must be more than 6 characters',
         ],  
     }),
     computed: {
         passwordConfirmationRule() {
-          return this.password === this.rePassword || 'Password must match'
-        }
+          return (this.password === this.rePassword) || 'Password must match'
+        },
+        repeatPasswordRules() {
+          return [
+            (v) => !!v || 'Password is required',
+            (v) => (v && v.length >= 6) || ' must be more than 6 characters',
+            (v) => (v === this.password) || 'Password must match',
+          ];
+        },
+
     },
     methods: {
-      submitForm () {
-        this.$refs.form.validate();
+      async submitForm () {
+        const valid = this.$refs.form.validate();
+        if(valid) {      
+          const rawResponse = await fetch('http://localhost:5000/api/auth/register', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                  "name": `${this.name}`,
+                  "email": `${this.email}`,
+                  "password": `${this.password}`,
+                  "password2": `${this.rePassword}`
+                }),
+              })
+              .then(res =>({rtn: res}) )
+              .catch(err => ({error: err}));
+              console.log("login=",rawResponse);
+        }
       },
     },
 
