@@ -89,11 +89,15 @@ exports.registerUser = (req, res) => {
 
 exports.loginUser = (req, res) => {
   // Form validation
+
+  console.log("loginUser Body=", req.body)
   const { errors, isValid } = validateLoginInput(req.body);
 
   // Check validation
   if (!isValid) {
-    return res.status(400).json(errors);
+    // return res.status(400).json(errors);
+          res.status(400).statusText=" hfhghfhh"
+     return res.status(400).json(errors);
   }
 
   const email = req.body.email;
@@ -110,6 +114,7 @@ exports.loginUser = (req, res) => {
 
       // Check password
       bcrypt.compare(password, user.password).then(isMatch => {
+        console.log("pwd ",password, " in base bwd", user.password)
         if (isMatch) {
           // User matched
           // Create JWT Payload

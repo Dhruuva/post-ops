@@ -1,25 +1,9 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   if (req.method === "OPTIONS") {
-//     return res.send(200);
-//   } else {
-//     if (process.env.NODE_ENV != "test") {
-//       console.log(req.originalUrl);
-//     }
-//     return next();
-//   }
-// });
-
-app.use(function(req, res, next) {
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type, Accept,Authorization,Origin");
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    next();
-});
+app.use(express.json());
+app.use(cors())
 
 global.__basedir = __dirname;
 const my_config = __dirname.split('/').slice(0,-1).join('/')+'/.env'
@@ -52,12 +36,13 @@ app.use(passport.initialize());
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 // Bodyparser middleware
-app.use(
-  bodyParser.urlencoded({
-    extended: false
-  })
-);
-app.use(bodyParser.json());
+
+// app.use(
+//   bodyParser.urlencoded({
+//     extended: false
+//   })
+// );
+// app.use(bodyParser.json());
 
 app.get("/favicon.ico", (req, res) => {
   res.end();

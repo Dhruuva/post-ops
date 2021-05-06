@@ -40,19 +40,26 @@ v-main.grey.lighten-2
     data: () => ({
       show: false,
       text: "Ole",
-      name: "",
-      pwd: ""
+      name: "alekseybazhenov@gmail.com",
+      pwd: "sddgdgdfgA2"
     }),
     methods: {
       async login (){
         console.log(" Logins")
-        const rawResponse = await fetch('http://localhost:5000/api/login', {
+        //let data = JSON.stringify({"email": "sdf@dfg.ru", "password": "Textual content"});
+       //JSON.stringify({email: "sdf@dfg.ru", password: 'Textual content'})
+       //'http://localhost:5000/api/auth/login2'
+       // 'http://localhost:3000/getViewLog'
+        const rawResponse = await fetch('http://localhost:5000/api/auth/login', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json;charset=utf-8'
           },
-          body: JSON.stringify({a: 1, b: 'Textual content'})
+          body: JSON.stringify({
+              "email": `${this.name}`,
+              "password": `${this.pwd}`
+          }),
         })
         .then(res =>({rtn: res}) )
         .catch(err => ({error: err}));

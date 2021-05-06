@@ -22,7 +22,7 @@ v-main.grey.lighten-2
             v-divider   
         v-card-actions
           v-row(align="center" justify="center")
-            v-btn-toggle.mt-n3(v-model='text' tile color='deep-purple accent-3' group)
+            v-btn-toggle.mt-n3( tile color='deep-purple accent-3' group)
               v-btn(icon)
                 v-icon mdi-google
               v-btn(icon)
@@ -52,7 +52,7 @@ v-main.grey.lighten-2
           v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'Password must contain at least lowercase letter, one number, a special character and one uppercase letter',
         ],
        minRules: [
-           v => (v && v.length >= 6) || 'Name must be more than 6 characters',
+           v =>( v && v.length >= 6) || 'Name must be more than 6 characters',
         ],  
     }),
     computed: {
