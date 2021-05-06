@@ -8,10 +8,10 @@ v-main.grey.lighten-2
             v-toolbar-title Login form 
           v-card-text   
             v-form(align="center" justify="center")
-              v-text-field(label='Login' name='login' prepend-icon='mdi-account' type='text')
-              v-text-field#password(label='Password' name='password' prepend-icon='mdi-lock' type='password')
+              v-text-field( v-model='name' label='Login' name='login' prepend-icon='mdi-account' type="text")
+              v-text-field( v-model='pwd' label='Password' name='password' prepend-icon='mdi-lock' type='password')
           v-card-actions.mt-n5
-            v-btn.flex(color='orange lighten-2' elevation="12" ) Login
+            v-btn.flex(color='orange lighten-2' elevation="12" @click="login") Login
           v-row.mt-3
             v-col 
               v-divider
@@ -39,6 +39,25 @@ v-main.grey.lighten-2
   export default {
     data: () => ({
       show: false,
+      text: "Ole",
+      name: "",
+      pwd: ""
     }),
+    methods: {
+      async login (){
+        console.log(" Logins")
+        const rawResponse = await fetch('http://localhost:5000/api/login', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({a: 1, b: 'Textual content'})
+        })
+        .then(res =>({rtn: res}) )
+        .catch(err => ({error: err}));
+        console.log("login=",rawResponse);
+      },
+    }
   }
 </script>
