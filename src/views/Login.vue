@@ -64,9 +64,12 @@ v-main.grey.lighten-2
         .then(response => response.json())
         .then(data => {
           console.log('Success:', data);
+          //const userId = '123'
+          this.$router.push({ name: 'Welcome',params:{ token: data.token}   });
         })
         .catch((error) => {
-          console.error('Error:', error);
+          console.error('Error121212:', error);
+          return error
         });
         console.log("login=",rawResponse);
       },

@@ -51,6 +51,7 @@ exports.validJWTNeeded = (req, res, next) => {
     try {
       let authorization = req.headers["authorization"].split(" ");
       if (authorization[0] !== "Bearer") {
+        console.log("validJWTNeeded ",authorization[0]  )
         return res.status(403).send({ error: "Need to pass a valid token" });
       } else {
         req.jwt = jwt.verify(authorization[1], process.env.JWT_SECRET);
