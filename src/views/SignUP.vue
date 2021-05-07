@@ -87,8 +87,13 @@ v-main.grey.lighten-2
                   "password2": `${this.rePassword}`
                 }),
               })
-              .then(res =>({rtn: res}) )
-              .catch(err => ({error: err}));
+              .then(response => response.json())
+              .then(data => {
+                console.log('Success:', data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
               console.log("login=",rawResponse);
         }
       },
