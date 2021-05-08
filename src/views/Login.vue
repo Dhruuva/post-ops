@@ -65,6 +65,12 @@ v-main.grey.lighten-2
         .then(data => {
           console.log('Success:', data);
           //const userId = '123'
+          this.$route.meta.visible=true
+          
+          this.$router.options.routes.forEach(a => (console.log(a)))
+          this.$router.options.routes.forEach(a => {
+            if (a.meta && a.meta.visible) a.meta.visible=true
+          })
           this.$router.push({ name: 'Welcome',params:{ token: data.token}   });
         })
         .catch((error) => {

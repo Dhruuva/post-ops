@@ -29,7 +29,7 @@ v-app#inspire
           v-list-item-icon
             v-icon mdi-home
           v-list-item-title Home
-        v-list-item(value='about' to="/about")
+        v-list-item(value='about' to="/about" v-if="$route.meta.visible")
           v-list-item-icon
             v-icon mdi-account
           v-list-item-title Account
