@@ -9,7 +9,7 @@ v-app#layoutGuest
     v-toolbar-title Application
     v-spacer
     v-btn(icon value='login' to="/login")
-      v-icon mdi-login-variant
+      v-icon mdi-login
     v-btn(icon)
       v-icon mdi-heart
     v-btn(icon)

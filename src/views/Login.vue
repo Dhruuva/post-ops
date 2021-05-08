@@ -36,6 +36,7 @@ v-main.grey.lighten-3
 </template>
 
 <script>
+  import jwt_decode from "jwt-decode";
   export default {
     data: () => ({
       show: false,
@@ -65,6 +66,9 @@ v-main.grey.lighten-3
         .then(data => {
           console.log('Success:', data);
           //const userId = '123'
+          let u = jwt_decode(data.token.split(' ')[1]);
+          console.log(u)
+          localStorage.setItem('LoggedUser',JSON.stringify({jwt:data.token,uJwt:data.refresh_token,user:u}));
           this.$route.meta.visible=true
           
           this.$router.options.routes.forEach(a => (console.log(a)))

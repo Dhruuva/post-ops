@@ -2,18 +2,16 @@
 v-app(id="layoutMembers")
   v-system-bar(app)
     v-spacer
-    v-icon mdi-account-alert
-    v-icon mdi-circle
+    v-chip(class="ma-1" small) {{msg}}
   v-app-bar(app)
     v-app-bar-nav-icon(@click='drawer = !drawer')
     v-toolbar-title Application
     v-spacer
+    v-btn(icon value='login' to="/welcome")  
+      v-icon mdi-account
     v-btn(icon value='login' to="/login")
-      v-icon mdi-login-variant
-    v-btn(icon)
-      v-icon mdi-heart
-    v-btn(icon)
-      v-icon mdi-dots-vertical  
+     v-icon mdi-logout
+      
   v-navigation-drawer(v-model='drawer' fixed temporary)
     v-list-item
       v-list-item-content
@@ -45,8 +43,27 @@ export default {
   },
   data: () => ({
     drawer: false,
+    msg: "ok",
     group: null,
- }),
+  }),
+  mounted() {
+    this.setUserInfo()
+    this.$nextTick(function () {
+      // Code that will run only after the
+      // entire view has been rendered
+    })
+  },
+   methods:{
+    setUserInfo() {
+      if (localStorage.getItem('LoggedUser')) {
+        let u = JSON.parse(localStorage.getItem('LoggedUser'))
+        console.log("layoutMembers ", u.user.name)
+        this.msg= u.user.name+", Welcome!"
+      } else {
+        console.log("layoutMembers Ops Now User")
+      }
+    }
+  }
 }
 </script>
 <style lang="stylus">

@@ -2,7 +2,21 @@
   v-main.red.lighten-5
     v-container(style="height:100%")
       v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
-        v-col( cols="12" sm="10" md="12") 
+        v-col( cols="12" sm="6" md="6")
+          v-card(class="mx-auto")
+            v-card-text
+              v-flex.mb-4
+                v-avatar.mr-4(size='96')
+                  img(src="@/assets/avatars/man.png" alt='Avatar')
+                v-btn(small ) Change Avatar
+              v-text-field(v-model='form.name' label='Name')
+              v-text-field(v-model='form.email' label='Email' readonly)   
+            v-card-actions
+              v-btn(color='info' ) 
+                v-icon(left dark) mdi-check
+                | Save Changes          
+      v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
+        v-col( cols="12" sm="12" md="12") 
           p {{Title}}
           v-btn.primary(@click='getUser') Get user
           v-text-field(label="token" :value="token")
@@ -21,7 +35,8 @@
       },
     },   
     data:()=>({
-      Title: "Welcome"
+      Title: "Welcome",
+      form:{name:"",email:""}
     
     }),
     methods:{
@@ -38,6 +53,7 @@
         .then(response => response.json())
         .then(data => {
           console.log('Success:', data);
+          this.form=data
           
         })
         .catch((error) => {
