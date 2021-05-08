@@ -1,52 +1,32 @@
 <template lang='pug'>
-v-app#inspire
-  v-system-bar(app)
-    v-spacer
-    v-icon mdi-account-alert
-    v-icon mdi-circle
-  v-app-bar(app)
-    v-app-bar-nav-icon(@click='drawer = !drawer')
-    v-toolbar-title Application
-    v-spacer
-    v-btn(icon value='login' to="/login")
-      v-icon mdi-login-variant
-    v-btn(icon)
-      v-icon mdi-heart
-    v-btn(icon)
-      v-icon mdi-dots-vertical  
-  v-navigation-drawer(v-model='drawer' fixed temporary)
-    v-list-item
-      v-list-item-content
-        v-list-item-title.title
-          | Application
-        v-list-item-subtitle
-          | subtext
-    v-divider
-    v-list(nav dense)
-      v-list-item-group(v-model='group' active-class='deep-purple--text text--accent-4')
-        v-list-item(value='home' to="/")
-          v-list-item-icon
-            v-icon mdi-home
-          v-list-item-title Home
-        v-list-item(value='about' to="/about" v-if="$route.meta.visible")
-          v-list-item-icon
-            v-icon mdi-account
-          v-list-item-title Account
-  
-  router-view            
+  component(:is="layout")
 </template>
 
 <script>
+import LayoutGuest from './components/LayoutGuest.vue'
+import LayoutMembers from './components/LayoutMembers.vue'
 
 export default {
   name: 'app',
   components: {
-   
+   LayoutGuest, LayoutMembers
+
   },
   data: () => ({
     drawer: false,
-    group: null,
- }),
+    layout: LayoutGuest,
+  }),
+  watch: {
+    $route(to) {
+      // set layout by route meta
+      if (to.meta.layout !== undefined) {
+        this.layout = to.meta.layout
+      } else {
+        this.layout = "LayoutGuest" // this is default layout if route meta is not set
+      }
+    },
+  },
+
 }
 </script>
 <style lang="stylus">

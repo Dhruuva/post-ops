@@ -9,7 +9,12 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+       visible: false,
+       title: 'Home',
+       layout:'LayoutGuest'
+    }
   },
   {
     path: '/about',
@@ -19,19 +24,30 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
     meta: {
-       visible: false,
-       title: 'About'
+      visible: false,
+      title: 'About',
+      layout:'LayoutMembers'
     }
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: {
+       visible: false,
+       title: 'Login',
+       layout:'LayoutGuest'
+    }
   },
   {
     path: '/signup',
     name: 'SignUP',
-    component: () => import(/* webpackChunkName: "about" */ '../views/SignUP.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/SignUP.vue'),
+    meta: {
+       visible: false,
+       title: 'SignUP',
+       layout:'LayoutGuest'
+    }
   },
   {
     path: '/welcome',
@@ -40,7 +56,8 @@ const routes = [
     props: true,
     meta: {
        visible: false,
-       title: 'Welcome'
+       title: 'Welcome',
+       layout:'LayoutMembers'
     }
   },
 ]
