@@ -4,7 +4,6 @@ v-app#inspire
     v-spacer
     v-icon mdi-account-alert
     v-icon mdi-circle
-    v-icon mdi-triangle
   v-app-bar(app)
     v-app-bar-nav-icon(@click='drawer = !drawer')
     v-toolbar-title Application

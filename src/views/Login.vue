@@ -1,5 +1,5 @@
 <template lang="pug">
-v-main.grey.lighten-2
+v-main.grey.lighten-3
     v-container(style="height:100%")
       v-row( align="center" justify="center" style="height:70vh" no-gutters dense)
         v-card.mx-auto(max-width='544' elevation="12"  shaped width="400")
