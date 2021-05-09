@@ -1,8 +1,14 @@
 <template lang="pug">
   v-main.grey.lighten-2
-    v-layout.mt-2( row wrap)
-      v-flex(  xs12 )
-        v-sheet(height='50' color="green lighten-3" elevation="5" )
-      v-flex( xs12 )
-        v-sheet(height='50')    
+    v-layout.ma-3( row wrap )
+      v-flex.d-md-inline( xs8 )
+        v-sheet.pa-5(elevation="5" )
+          v-avatar(class="profile"  color="grey" size="164" tile)
+            v-img( src="@/assets/avatars/man.png" alt='Avatar')
+          v-text-field(label="Name " single-line)
+          v-text-field(label="Email " single-line)
+          v-btn.ma-2(small ) Change Avatar
+          v-btn.ma-2(small ) Change Avatar  
+      v-flex.d-md-inline( xs8 )
+        v-sheet(height='50' color="green lighten-3" elevation="5" )   
 </template>
