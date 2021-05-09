@@ -9,7 +9,7 @@
                 v-avatar.mr-4(size='96')
                   img(src="@/assets/avatars/man.png" alt='Avatar')
                 v-btn(small ) Change Avatar
-              v-text-field(v-model='form.name' label='Name')
+              v-text-field(v-model='form.name' label='Name' single-line hide-details)
               v-text-field(v-model='form.email' label='Email' readonly)   
             v-card-actions
               v-btn(color='info' ) 
