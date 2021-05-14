@@ -5,17 +5,17 @@
         v-col( cols="12" sm="6" md="6")
           v-card.ma-1(max-height='900' )
             v-card-text
-              v-flex.mb-4
-                v-avatar.mr-4(size='96')
-                  img(src="@/assets/avatars/man.png" alt='Avatar')
-                v-btn(small ) Change Avatar
-              v-combobox(:items="searchHistory" :menu-props="{value: autoselectMenu}" @click:append="toggle")
-                template( v-slot:item="{ item }")
-                  v-avatar( color="grey" size="30" tile)
-                    img(:src="item")
-                v-icon( slot="append"  :color="autoselectMenu ? 'primary' : undefined" 
-                    @click="toggle" 
-                    v-text="autoselectMenu ? 'mdi-menu-up' : 'mdi-menu-down'")
+              v-avatar.d-flex.mr-4(size='150')
+                v-img(v-if="form.profilePicture.length>0" :src="form.profilePicture" alt='Avatar')
+                v-img(v-else src="@/assets/avatars/man.png" alt='Avatar')    
+              span {{avatar}}    
+              v-btn.ma-2(v-if="autoselectMenu!==true" small @click="toggle") Change Avatar
+              v-flex.ma-2(v-else shrink style="width:105px")
+                v-select( v-model="avatar" :items="avatars" :menu-props="{value: autoselectMenu, auto: false, overflowY: true, maxHeight: 320}" autowidth  )
+                  template( v-slot:item="{ item }")
+                    v-avatar( color="grey" size="100" @click="toggle" tile)
+                      img( v-if="item.f" :src='require(`@/assets/avatars/${item.f}`)' @click="setAvatar(item.f)" alt='Avatar')
+                      img( v-else src='@/assets/avatars/man.png'  alt='Avatar')
               v-text-field(v-model='form.name' label='Name' single-line  solo)
               v-text-field(v-model='form.familyname' label='Family' single-line  solo)  
               v-text-field(v-model='form.email' label='Email' single-line disabled solo) 
@@ -70,17 +70,19 @@
     },   
     data:()=>({
       Title: "Welcome",
-      form:{name:"",email:"",date:"",familyname:""},
+      form:{profilePicture:"", name:"",email:"",date:"",familyname:""},
       noChanged:true,
       authType:null,
       roles:[],
       userTbl:{hd:[{text:'user',value:'user'}],rows:[]},
+      avatar:null,
       autoselectMenu: false,
       search: '',
-      searchHistory: [
-        "@/assets/avatars/worker.png",
-        "@/assets/avatars/businessman.png",
-      
+      avatars:[
+        {f:'businessman.png'},
+        {f:'worker.png'},
+        {f:'boy.png'},
+        {f:'smile.png'},
       ]
     
     }),
@@ -101,6 +103,9 @@
       },
       authType(){
         this.noChanged= false
+      },
+      avatar(){
+         console.log("Avatarv==>", this.avatar )
       }
     },  
 
@@ -111,6 +116,10 @@
     },
     
     methods:{
+      setAvatar(a){
+        this.form.profilePicture=require(`@/assets/avatars/${a}`)
+        console.log(a)
+      },
       toggle() {
         this.autoselectMenu = !this.autoselectMenu
       },
@@ -217,7 +226,8 @@
             "name": `${this.form.name}`,
             "email": `${this.form.email}`,
             "permissionLevel": user_types.permissionLevels[this.authType],
-            "familyname": `${this.form.familyname}`
+            "familyname": `${this.form.familyname}`,
+            "profilePicture": `${this.form.profilePicture}`
           }
           let l = JSON.stringify(usr);
           console.log(user_types, " this id token ", l)  
