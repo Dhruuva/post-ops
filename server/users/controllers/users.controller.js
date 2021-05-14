@@ -115,10 +115,10 @@ exports.getById = (req, res) => {
 
 exports.patchById = (req, res) => {
   // We make sure to not patch the permissionLevel and id
-  delete req.body["permissionLevel"];
+ // delete req.body["permissionLevel"];
   delete req.body["id"];
   // We make sure they try to modify themselves if they don't have the right permission
-
+  console.log(" exports.patchById ",req.body )
   var newUser = req.body;
   if (req.body.password) {
     // Hash password before saving in database

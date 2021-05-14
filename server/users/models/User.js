@@ -92,7 +92,7 @@ userSchema.statics.removeById = function(id) {
 };
 
 userSchema.statics.patch = function(id, userData) {
-  delete userData["permissionLevel"];
+ // delete userData["permissionLevel"];
   delete userData["id"];
 
   // needs to Ensure no collision

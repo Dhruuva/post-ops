@@ -24,6 +24,6 @@ npm run test:unit
 ```
 npm run lint
 ```
-
+mongo --port 27017 --authenticationDatabase admin -u myUserAdmin -p
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
