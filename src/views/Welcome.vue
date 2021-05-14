@@ -2,7 +2,7 @@
   v-main.red.lighten-5
     v-container(style="height:100%" fluid)
       v-row( no-gutters dense)
-        v-col( cols="12" sm="6" md="6")
+        v-col( cols="12" sm="5" md="5")
           v-card.ma-1(max-height='900' )
             v-card-text
               v-avatar.d-flex.mr-4(size='150')
@@ -11,7 +11,7 @@
               span {{avatar}}    
               v-btn.ma-2(v-if="autoselectMenu!==true" small @click="toggle") Change Avatar
               v-flex.ma-2(v-else shrink style="width:105px")
-                v-select( v-model="avatar" :items="avatars" :menu-props="{value: autoselectMenu, auto: false, overflowY: true, maxHeight: 320}" autowidth  )
+                v-select( v-model="avatar" :items="avatars" :menu-props="{value: autoselectMenu, auto: false, overflowY: false, maxHeight: 320}" autowidth  )
                   template( v-slot:item="{ item }")
                     v-avatar( color="grey" size="100" @click="toggle" tile)
                       img( v-if="item.f" :src='require(`@/assets/avatars/${item.f}`)' @click="setAvatar(item.f)" alt='Avatar')
@@ -19,7 +19,7 @@
               v-text-field(v-model='form.name' label='Name' single-line  solo)
               v-text-field(v-model='form.familyname' label='Family' single-line  solo)  
               v-text-field(v-model='form.email' label='Email' single-line disabled solo) 
-              v-text-field(v-model='form.date' label='Date' single-line disabled solo) 
+              v-text-field( label='Date' single-line disabled solo :value="form.date | toShortTime") 
               v-combobox(v-model='authType' :items='roles' label='Member of' outlined dense hint="Select role" clearable hide-details) 
               v-text-field(v-model='form.OAuthProvider' label='OAuthProvider' hide-details solo single-line disabled)
 
@@ -32,7 +32,7 @@
                 v-icon(left dark) mdi-cancel
                 | Decline 
               v-btn.primary(@click='test') test
-        v-col( cols="12" sm="6" md="6")
+        v-col( cols="12" sm="7" md="7")
           v-sheet.ma-1( align="left" justify="center"  )
             v-btn.info.ma-2(@click='getAllUser') Get All user  
             v-data-table.ma-2(:headers="userTbl.hd" :items="userTbl.rows" dense class="elevation-3" )
@@ -46,6 +46,10 @@
                     v-img(v-else src="@/assets/avatars/man.png" alt='Avatar')  
               template(v-slot:item._id='{ item }')
                 td.cell_my {{item._id}}  
+              template(v-slot:item.__v='{ item }')
+                v-btn.primary.ma-1(x-small @click="deleteUser(item._id)") Remove
+              template(v-slot:item.date='{ item }')
+                td.cell_my(nowrap) {{item.date | toShortTime}}       
 
       v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
         v-col( cols="12" sm="12" md="12") 
@@ -89,6 +93,7 @@
      mounted() {
       this.$nextTick(function () {
         this.setRoleTypes(user_types)
+        this.getUser()
         console.log( this.noChanged, "<----user_types ",user_types)
       })
     },
@@ -205,13 +210,15 @@
           console.log('Success:', data);
            if (data.length>0 ){
             let h =Object.keys(data[0]).map(a=>({
-              text:a,value:a, align: "center",divider:true
-            }) ) 
+              text:a,value:a, align: "center",divider:true,width:100
+            }) ).filter(a=> ["OAuthId","OAuthProvider","permissionLevel"].indexOf(a.text)<0)
+            console.log(h)
+            //let d=["OAuthId","OAuthProvider"]
             while (this.userTbl.hd.length>0) this.userTbl.hd.pop()
             this.userTbl.hd = [...h]
             while (this.userTbl.rows.length>0) this.userTbl.rows.pop()
             this.userTbl.rows=[...data]  
-            console.log(h[1])
+            
            }
         })
         .catch((error) => {
@@ -252,6 +259,29 @@
           
 
       },
+      async deleteUser(id){
+          await fetch('http://localhost:5000/api/users/'+id, {
+            method: 'DELETE',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json;charset=utf-8',
+              'Authorization':  this.token,
+            }
+           
+           })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
+              let i = this.userTbl.rows.map(a=>a._id).indexOf(a=>a._id==id)
+              console.log('IIIIIIIIIIIIII:', i);
+              this.userTbl.rows.splice(i,1)
+            })
+            .catch((error) => {
+              console.error('Error121212:', error);
+              return error
+            });
+
+      },
         
     }
   }
@@ -260,9 +290,10 @@
 <style lang="stylus">
   .cell_my
     width 50px !important
+    width-min 40px !important
     overflow hidden
     color red
-    font-size 19px
+    font-size 11px
   .dataTable 
     font-size 19px !important
   th 
