@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET;
+console.log( process.env.JWT_SECRET)
 
 const User = require("../users/models/User");
 const UsersController = require("../users/controllers/users.controller");

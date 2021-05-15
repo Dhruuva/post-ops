@@ -21,7 +21,7 @@ v-main.grey.lighten-3
           v-card-actions
             v-row(align="center" justify="center")
               v-btn-toggle(v-model='text' tile color='deep-purple accent-3' group)
-                v-btn(icon)
+                v-btn(icon href='http://localhost:5000/api/auth/google' )
                   v-icon mdi-google
                 v-btn(icon)
                   v-icon mdi-facebook
@@ -44,6 +44,17 @@ v-main.grey.lighten-3
       name: "todhruva@mail.ru",
       pwd: "qwerexQ1"
     }),
+    mounted() {
+      this.$nextTick(function () {
+        let q = this.$route.query.token
+        let qq = this.$route.query.refresh_token
+        console.log( qq, "  <----Redirect login ", q)
+        if (q && qq){
+          this.saveTokens('Bearer '+ q,qq);
+          this.$router.push({ name: 'Welcome',params:{ token: 'Bearer '+ q}   });
+        }
+      })
+    },
     methods: {
       async login (){
         console.log(" Logins")
@@ -83,6 +94,32 @@ v-main.grey.lighten-3
         });
         console.log("login=",rawResponse);
       },
+      saveTokens(token,uJwt){
+        let u =(token.split(' ').length>1)? jwt_decode(token.split(' ')[1]):jwt_decode(token);
+        console.log(" saveTokens Goog",u)
+        localStorage.setItem('LoggedUser',JSON.stringify({jwt:token,uJwt:uJwt,user:u}));
+      },
+      async toGoogle (){
+        console.log(" toGoogle")
+        await fetch('http://localhost:5000/api/auth/google', {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+        })
+        .then(response => response.json())
+        .then(data => {
+           console.error(' Data:', data);
+         })
+        .catch((error) => {
+          console.error('Error Google:', error);
+          return error
+        }); 
+      }
+
     }
-  }
+
+    //~~~~~~~~~~~~~~~
+  }  
 </script>

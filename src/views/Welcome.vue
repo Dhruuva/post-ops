@@ -49,7 +49,7 @@
               template(v-slot:item.__v='{ item }')
                 v-btn.primary.ma-1(x-small @click="deleteUser(item._id)") Remove
               template(v-slot:item.date='{ item }')
-                td.cell_my(nowrap) {{item.date | toShortTime}}       
+                td.truncate(nowrap) {{item.date | toShortTime}}       
 
       v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
         v-col( cols="12" sm="12" md="12") 
@@ -186,7 +186,7 @@
 
       },
       myIDis(token){
-          let u = jwt_decode(token.split(' ')[1]);
+          let u =(token.split(' ').length>1)? jwt_decode(token.split(' ')[1]):jwt_decode(token);
           return u.id
       },
       viewPayload(val){//dev
@@ -303,4 +303,11 @@
     overflow hidden !important
     color red !important
     font-size 19px  !important
+  .truncate 
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap 
+    font-size 11px
+    width 50px !important
+    width-min 40px !important
 </style>
