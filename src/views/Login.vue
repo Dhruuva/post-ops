@@ -23,9 +23,9 @@ v-main.grey.lighten-3
               v-btn-toggle(v-model='text' tile color='deep-purple accent-3' group)
                 v-btn(icon href='http://localhost:5000/api/auth/google' )
                   v-icon mdi-google
-                v-btn(icon)
+                v-btn(icon href='http://localhost:5000/api/auth/mailru')
                   v-icon mdi-facebook
-                v-btn(icon)
+                v-btn(icon href='http://localhost:5000/api/auth/github')
                   v-icon mdi-github 
           v-divider            
           v-card-actions 

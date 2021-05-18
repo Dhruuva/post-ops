@@ -143,6 +143,66 @@ exports.loginUser = (req, res) => {
     });
 };
 
+exports.loginMailru = (req, res, next) => {
+  const generateTokens = this.generateTokens;
+  passport.authenticate("mailru", function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.redirect("/login");
+    }
+    // User matched
+    // Create JWT Payload
+    const payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      profilePicture: user.profilePicture,
+      permissionLevel: user.permissionLevel
+    };
+    generateTokens(payload)
+      .then(([token, refresh_token]) => {
+        return res.redirect(
+          `${process.env.YOUR_FRONT_URL}login?token=${token}&refresh_token=${refresh_token}`
+        );
+      })
+      .catch(err => {
+        return res.status(400).send({ error: "Error", err: err });
+      });
+  })(req, res, next);
+};
+
+exports.loginGithub = (req, res, next) => {
+  const generateTokens = this.generateTokens;
+  passport.authenticate("github", function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.redirect("/login");
+    }
+    // User matched
+    // Create JWT Payload
+    const payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      profilePicture: user.profilePicture,
+      permissionLevel: user.permissionLevel
+    };
+    generateTokens(payload)
+      .then(([token, refresh_token]) => {
+        return res.redirect(
+          `${process.env.YOUR_FRONT_URL}login?token=${token}&refresh_token=${refresh_token}`
+        );
+      })
+      .catch(err => {
+        return res.status(400).send({ error: "Error", err: err });
+      });
+  })(req, res, next);
+};
+
 exports.loginGoogle = (req, res, next) => {
   const generateTokens = this.generateTokens;
   passport.authenticate("google", function(err, user, info) {
@@ -164,7 +224,7 @@ exports.loginGoogle = (req, res, next) => {
     generateTokens(payload)
       .then(([token, refresh_token]) => {
         return res.redirect(
-          `${process.env.URL_LOGIN}login?token=${token}&refresh_token=${refresh_token}`
+          `${process.env.YOUR_FRONT_URL}login?token=${token}&refresh_token=${refresh_token}`
         );
       })
       .catch(err => {
@@ -196,7 +256,7 @@ exports.loginFacebook = (req, res, next) => {
     generateTokens(payload)
       .then(([token, refresh_token]) => {
         return res.redirect(
-          `${process.env.URL_LOGIN}login?token=${token}&refresh_token=${refresh_token}`
+          `${process.env.YOUR_FRONT_URL}login?token=${token}&refresh_token=${refresh_token}`
         );
       })
       .catch(err => {

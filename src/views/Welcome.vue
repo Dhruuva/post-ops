@@ -47,7 +47,7 @@
               template(v-slot:item._id='{ item }')
                 td.cell_my {{item._id}}  
               template(v-slot:item.__v='{ item }')
-                v-btn.primary.ma-1(x-small @click="deleteUser(item._id)") Remove
+                v-btn.primary.ma-1(x-small @click="deleteUser(item._id)" :disabled = 'canRemove') Remove
               template(v-slot:item.date='{ item }')
                 td.truncate(nowrap) {{item.date | toShortTime}}       
 
@@ -74,7 +74,7 @@
     },   
     data:()=>({
       Title: "Welcome",
-      form:{profilePicture:"", name:"",email:"",date:"",familyname:""},
+      form:{profilePicture:"", name:"",email:"",date:"",familyname:"",permissionLevel:0},
       noChanged:true,
       authType:null,
       roles:[],
@@ -102,7 +102,7 @@
         handler: function(v) {
           v.a=1
           this.noChanged= false
-          //console.log (was ,'Form changed', this.noChanged,v )
+          console.log (v ,'Form changed', this.noChanged,v )
         },
         deep: true
       },
@@ -118,6 +118,12 @@
       // hasChanged () {
       //   return Object.keys(this.form).some(field => this.form[field] !== defaultForm[field])
       // }
+      canRemove(){
+       
+        let rtn =( this.form.permissionLevel && this.form.permissionLevel>2000)? false:true
+        console.log( this.permissionLevel , "<== this.permissionLevel", rtn, " +++")
+        return rtn
+      }
     },
     
     methods:{
@@ -156,7 +162,7 @@
           this.$router.push({ name: 'Login',params:{ msg: "Please relogin"}   });
           return
         }  
-        await fetch('http://localhost:5000/api/users/'+this.myIDis(validToken), {
+        await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+this.myIDis(validToken), {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -199,8 +205,8 @@
         console.log("viewPayload " , u.id )
       },
       async getAllUser(){
-        console.log( " this id token ", this.token)
-        await fetch('http://localhost:5000/api/users/', {
+        console.log( " this id token ", process.env.VUE_APP_BACKEND_URL)
+        await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/', {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -241,7 +247,7 @@
           }
           let l = JSON.stringify(usr);
           console.log(user_types, " this id token ", l)  
-          await fetch('http://localhost:5000/api/users/'+this.myIDis(this.token), {
+          await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+this.myIDis(this.token), {
             method: 'PATCH',
             headers: {
               'Accept': 'application/json',
@@ -263,7 +269,7 @@
 
       },
       async deleteUser(id){
-          await fetch('http://localhost:5000/api/users/'+id, {
+          await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+id, {
             method: 'DELETE',
             headers: {
               'Accept': 'application/json',

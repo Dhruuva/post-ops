@@ -5,13 +5,28 @@ const passport = require("passport");
 const AuthController = require("./controllers/auth.controller");
 const AuthMiddleware = require("./middlewares/auth.middleware");
 
+// MAILRU
+router.get(
+  "/mailru",
+  passport.authenticate("mailru", { scope: ["profile", "email"] })
+);
+router.get("/mailru/callback", AuthController.loginMailru);
+
+
+// GITHUB
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["profile", "email"] })
+);
+router.get("/github/callback", AuthController.loginGithub);
+
 // GOOGLE
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
-
 router.get("/google/callback", AuthController.loginGoogle);
+
 // FACEBOOK
 router.get(
   "/facebook",
