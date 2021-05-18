@@ -164,7 +164,7 @@ exports.loginGoogle = (req, res, next) => {
     generateTokens(payload)
       .then(([token, refresh_token]) => {
         return res.redirect(
-          `http://localhost:8383/liquid-trader/login?token=${token}&refresh_token=${refresh_token}`
+          `${process.env.URL_LOGIN}login?token=${token}&refresh_token=${refresh_token}`
         );
       })
       .catch(err => {
@@ -196,7 +196,7 @@ exports.loginFacebook = (req, res, next) => {
     generateTokens(payload)
       .then(([token, refresh_token]) => {
         return res.redirect(
-          `http://localhost:3000/login?token=${token}&refresh_token=${refresh_token}`
+          `${process.env.URL_LOGIN}login?token=${token}&refresh_token=${refresh_token}`
         );
       })
       .catch(err => {

@@ -7,8 +7,9 @@ v-app(id="layoutMembers")
     v-app-bar-nav-icon(@click='drawer = !drawer')
     v-toolbar-title Application
     v-spacer
-    v-btn(icon value='login' to="/welcome")  
-      v-icon mdi-account
+    v-btn(icon value='login' to="/welcome")
+      v-avatar(size=50)  
+        v-img.mr-3( :src="photo" alt='Avatar')
     v-btn(icon value='login' to="/login")
      v-icon mdi-logout
       
@@ -45,6 +46,7 @@ export default {
     drawer: false,
     msg: "ok",
     group: null,
+    photo:"@/assets/avatars/man.png",
   }),
   mounted() {
     this.setUserInfo()
@@ -59,6 +61,9 @@ export default {
         let u = JSON.parse(localStorage.getItem('LoggedUser'))
         console.log("layoutMembers ", u.user.name)
         this.msg= u.user.name+", Welcome!"
+        if (u.user.profilePicture.length>0){
+          this.photo = u.user.profilePicture
+        }
       } else {
         console.log("layoutMembers Ops Now User")
       }

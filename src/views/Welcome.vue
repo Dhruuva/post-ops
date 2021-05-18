@@ -147,18 +147,21 @@
 
       async getUser(){
         console.log( "<<<< this id token ", this.token,this.getToken())
-        let uid = (this.token)? this.token: null
-        if (!uid ) uid= this.getToken()
-        if (!uid ){
+        let validToken = (this.token)? this.token: null
+        if (!validToken ){ 
+          validToken = this.getToken()
+        }
+          console.log( " Get token from store @@@" ,this.getToken())
+        if (!validToken ){
           this.$router.push({ name: 'Login',params:{ msg: "Please relogin"}   });
           return
         }  
-        await fetch('http://localhost:5000/api/users/'+this.myIDis(this.token), {
+        await fetch('http://localhost:5000/api/users/'+this.myIDis(validToken), {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=utf-8',
-            'Authorization':  this.token,
+            'Authorization':  validToken,
 
           },
          })
