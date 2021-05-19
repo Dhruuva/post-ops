@@ -19,7 +19,7 @@ export default Vue.mixin({
     getToken() {
       if (localStorage.getItem('LoggedUser')) {
         let u = JSON.parse(localStorage.getItem('LoggedUser'))
-        console.log("###layoutMembers Global Now User",u.jwt)
+        //console.log("###layoutMembers Global Now User",u.jwt)
         return  u.jwt
       } else {
         console.log("layoutMembers Ops Now User")

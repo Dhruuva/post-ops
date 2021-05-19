@@ -159,7 +159,7 @@
         }
           console.log( " Get token from store @@@" ,this.getToken())
         if (!validToken ){
-          this.$router.push({ name: 'Login',params:{ msg: "Please relogin"}   });
+          this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
           return
         }  
         await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+this.myIDis(validToken), {
@@ -175,8 +175,8 @@
         .then(data => {
           console.log(data.success,'22Success:', data);
           //{error: "Need to pass a valid token"} 403
-          if (data.error ){
-            this.$router.push({ name: 'Login',params:{ msg: "Please relogin"}   });
+          if (data.error  &&  data.error == "Need to pass a valid token"){
+            this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
             return
           }  
           this.form=data

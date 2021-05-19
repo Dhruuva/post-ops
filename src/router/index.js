@@ -60,6 +60,17 @@ const routes = [
        layout:'LayoutMembers'
     }
   },
+  {
+    path: '/post',
+    name: 'Post',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Post.vue'),
+    props: true,
+    meta: {
+       visible: false,
+       title: 'Post',
+       layout:'LayoutMembers'
+    }
+  },
 ]
 
 const router = new VueRouter({

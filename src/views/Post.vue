@@ -1,0 +1,135 @@
+<template lang="pug">
+  v-main.red.lighten-5
+    v-container
+      v-row( no-gutters dense)
+        v-col( cols="12" sm="5" md="5")
+          v-card.ma-1(max-height='900' :loading = "loading" )
+            v-toolbar.primary.lighten-3( dense  dark)
+            v-form(align="center" justify="center" ref='form' lazy-validation)  
+              v-text-field.mx-4.mt-4(v-model="title"  prepend-icon="mdi-page-layout-header"  label="Topic"  outlined  placeholder="Topic"  dense :rules='nameRules' required )
+              v-textarea.mx-4( v-model="content" outlined name="postMsg" label="Write message here" value="Ogog " :rules='msgRules' required  )
+            v-card-actions
+              v-btn.primary.lighten-3( @click='submitForm' dark ) Post
+        v-col( cols="12" sm="7" md="7")
+          v-card.ml-4(:loading = "loading")
+            v-toolbar.info.lighten-2( dense  dark)
+               v-btn.secondary.lighten-3( @click='loadPosts' dark small) Get posts  
+            v-list(dense)
+              v-list-item-group( active-class='pink--text' )
+                template(v-for='(item, index) in items')
+                  v-list-item(:key='item._id')
+                    template(v-slot:default='{ active }')
+                      v-list-item-content
+
+                        v-list-item-icon
+                          v-avatar.mr-2( color="grey" size="30" fab)
+                            v-img(v-if="item.author.profilePicture" :src="item.author.profilePicture" alt='Avatar')
+                            v-img(v-else src="@/assets/avatars/man.png" alt='Avatar')
+                          v-list-item-title.primary--text(v-text='item.author.name' )
+                        v-list-item-subtitle(v-text='item.title' color='red')
+                        v-list-item-subtitle(v-text='item.content')
+                      v-list-item-action
+                        v-row
+                          v-icon( color='yellow darken-3') mdi-star
+                          v-icon( color='red lighten-1' @click="delete(item._id)") mdi-delete
+
+                  v-divider(v-if='index < items.length - 1' :key='index')      
+</template>
+
+<script>
+  export default{
+    name: 'post',
+    data:()=>({
+      title:"",
+      content:"",
+      loading:false,
+      validToken:null,
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length >= 4) || 'Name must be more than 4 characters',
+      ], 
+      msgRules: [
+        v => !!v || 'No empty post',
+        v => (v && v.length <= 255) || 'Name must be less than 255 characters',
+      ], 
+      items: [
+        
+      ]               
+    }),
+    methods:{
+      async submitForm () {
+
+        const valid = this.$refs.form.validate();
+        if(valid) { 
+          if (!this.validToken )  this.validToken = this.getToken()
+          console.log( " Get token from store @@@" ,this.validToken)
+          if (!this.validToken ){
+            this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+            return
+          }
+          this.loading = true
+          await fetch(process.env.VUE_APP_BACKEND_URL+'api/posts/', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization':  this.validToken
+              },
+              body: JSON.stringify({
+                  "title": `${this.title}`,
+                  "content": `${this.content}`
+                }),
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.error  &&  data.error == "Need to pass a valid token"){
+                  this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+                  return
+                }  
+                console.log(' Post add Success:', data);
+                this.loading = false
+              })
+              .catch((error) => {
+                console.error('Post Error:', error);
+                this.loading = false
+              });
+             
+          } //valid end     
+      //__________   
+      },
+      async loadPosts () {
+        if (!this.validToken )  this.validToken = this.getToken()
+        if (!this.validToken ){
+          this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+          return
+        }
+        this.loading = true
+        await fetch(process.env.VUE_APP_BACKEND_URL+'api/posts/feed/', {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json;charset=utf-8',
+              
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(' Post add Success:', data);
+              while (this.items.length>0) this.items.pop()
+              this.items=[...data]   
+              this.loading = false
+
+            })
+            .catch((error) => {
+              console.error('Post Error:', error);
+              this.loading = false
+            });
+           
+      //__________   
+      } ,
+      async delete (id) {  
+        console.log(  id)
+      }  
+    }
+  }
+</script>

@@ -74,7 +74,7 @@ v-main.grey.lighten-2
       async submitForm () {
         const valid = this.$refs.form.validate();
         if(valid) {      
-          const rawResponse = await fetch('http://localhost:5000/api/auth/register', {
+          const rawResponse = await fetch(process.env.VUE_APP_BACKEND_URL+'api/auth/register', {
                 method: 'POST',
                 headers: {
                   'Accept': 'application/json',

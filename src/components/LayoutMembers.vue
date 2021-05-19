@@ -27,6 +27,10 @@ v-app(id="layoutMembers")
           v-list-item-icon
             v-icon mdi-home
           v-list-item-title Home
+        v-list-item(value='post' to="/post" )
+          v-list-item-icon
+            v-icon mdi-post
+          v-list-item-title Post  
         v-list-item(value='about' to="/about" )
           v-list-item-icon
             v-icon mdi-account

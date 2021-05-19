@@ -16,10 +16,12 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 
-require("./users//models/User");
+require("./users/models/User");
+require("./posts/models/Post");
 
 const authRouter = require("./auth/auth.routes");
 const usersRouter = require("./users/users.routes");
+const postsRouter = require("./posts/posts.routes");
 console.log(process.env.MONGO_URI)
 
 // DB Config
@@ -40,6 +42,7 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/posts", postsRouter);
 // Bodyparser middleware
 
 // app.use(
