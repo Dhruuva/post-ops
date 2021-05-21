@@ -20,5 +20,10 @@ router.patch("/:id", [
   PostPermissionMiddleware.onlyAuthorOrAdminCanDoThisAction,
   PostsController.patchById
 ]);
+router.delete("/:postId", [
+  AuthMiddleware.validJWTNeeded,
+  PostPermissionMiddleware.onlyAuthorOrAdminCanDoThisAction,
+  PostsController.removeById
+]);
 
 module.exports = router;

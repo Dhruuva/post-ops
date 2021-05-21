@@ -22,7 +22,7 @@ require("./posts/models/Post");
 const authRouter = require("./auth/auth.routes");
 const usersRouter = require("./users/users.routes");
 const postsRouter = require("./posts/posts.routes");
-console.log(process.env.MONGO_URI)
+
 
 // DB Config
 const db = process.env.MONGO_URI;

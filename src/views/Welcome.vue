@@ -258,6 +258,10 @@
            })
             .then(response => response.json())
             .then(data => {
+              if (data.error  &&  data.error == "Need to pass a valid token"){
+                this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+                return
+              }  
               console.log('Success:', data);
                
             })
@@ -280,8 +284,12 @@
            })
             .then(response => response.json())
             .then(data => {
+              if (data.error  &&  data.error == "Need to pass a valid token"){
+                this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+                return
+              }  
               console.log('Success:', data);
-              let i = this.userTbl.rows.map(a=>a._id).indexOf(a=>a._id==id)
+              let i = this.userTbl.rows.findIndex(a=>a._id==id)
               console.log('IIIIIIIIIIIIII:', i);
               this.userTbl.rows.splice(i,1)
             })

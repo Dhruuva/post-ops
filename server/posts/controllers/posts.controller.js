@@ -72,3 +72,10 @@ exports.list = (req, res) => {
       return res.status(400).send({ error: "Probably invalid data" });
     });
 };
+
+exports.removeById = (req, res) => {
+  Post.removeById(req.params.postId).then(result => {
+    res.status(200).send({});
+  });
+};
+
