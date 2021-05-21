@@ -44,8 +44,9 @@ exports.getById = (req, res) => {
 
 exports.patchById = (req, res) => {
   // We make sure they try to modify themselves if they don't have the right permission
-
-  var patchedPost = req.body.data;
+  console.log( req.params,req.query, req.body)
+  var patchedPost = req.body;
+  //console.log("patchById ",req.body.data)
   // We make sure to not patch the author and id
   delete patchedPost["author"];
   delete patchedPost["id"];

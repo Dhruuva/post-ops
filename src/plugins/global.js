@@ -1,5 +1,5 @@
 import Vue from 'vue';
-
+import jwt_decode from "jwt-decode";
 export default Vue.mixin({
   methods: {
     capitalizeFirstLetter: str => str.charAt(0).toUpperCase() + str.slice(1),
@@ -25,6 +25,11 @@ export default Vue.mixin({
         console.log("layoutMembers Ops Now User")
         return null
       }
-    }
+    },
+    myIDis(){
+      let token = this.getToken()
+      let u =(token && token.split(' ').length>1)? jwt_decode(token.split(' ')[1]):jwt_decode(token);
+          return u.id
+    },
   }
 })

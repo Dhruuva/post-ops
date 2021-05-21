@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require('cors');
+const listEndpoints = require('express-list-endpoints')
 
 app.use(express.json());
 app.use(cors())
@@ -62,6 +63,8 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   if (process.env.NODE_ENV != "test") {
     console.log(`Server up and running on port ${port} !`);
+    //printMe(getAppEndpoints(app))
+    console.log(printMe(getAppEndpoints(app)))
    // console.log(app._router.stack.map(r=>r.route).filter(r=>r).map(r=>`${Object.keys(r.methods)}${r.path}`) )
   }
 });
@@ -74,6 +77,25 @@ const getAppRoutes = (app) => app._router.stack.reduce(
           x => val.regexp.toString().match(/\/[a-z]+/)[0] + (
             x.route.path === '/' ? '' : ` ${x.route.path} ${Object.keys(x.route.methods).join(' +') } `)) : []) , []).sort();
 
-console.log(getAppRoutes(app) )
- console.log(app._router.stack.map(r=>r.route).filter(r=>r).map(r=>`${Object.keys(r.methods)} ${r.path}`) )
+//console.log(getAppRoutes(app) )
+function getAppEndpoints (app) {
+  try {
+    return listEndpoints(app);
+  } catch (e) {
+    return [];
+  }
+}
+function printMe(routs) {
+  let m=  routs.map(a=>a.path)
+  let t=  routs.map(a=>a.methods)
+  let s=  routs.map(a=>a.middleware)
+  let rtn = []
+  m.forEach((v, i) => {
+    rtn.push(m[i] + "  " + `'          ${t[i]}'` + "  " + s[i])
+  })
+  return rtn
+  // body...
+}
+//console.log(listEndpoints(app));
+ //console.log(app._router.stack.map(r=>r.route).filter(r=>r).map(r=>`${Object.keys(r.methods)} ${r.path}`) )
 

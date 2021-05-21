@@ -1,5 +1,5 @@
 <template lang='pug'>
-  v-main.red.lighten-5
+  v-main.grey.lighten-3
     v-container(style="height:100%" fluid)
       v-row( no-gutters dense)
         v-col( cols="12" sm="5" md="5")
@@ -90,7 +90,7 @@
       ]
     
     }),
-     mounted() {
+    mounted() {
       this.$nextTick(function () {
         this.setRoleTypes(user_types)
         this.getUser()
