@@ -5,21 +5,21 @@ v-app(id="layoutMembers")
     v-chip(class="ma-1" small) {{msg}}
   v-app-bar(app)
     v-app-bar-nav-icon(@click='drawer = !drawer')
-    v-toolbar-title Application
+    v-toolbar-title Publish
     v-spacer
     v-btn(icon value='login' to="/welcome")
       v-avatar(size=50)  
         v-img.mr-3( :src="photo" alt='Avatar')
-    v-btn(icon value='login' to="/login")
-     v-icon mdi-logout
+    v-btn(icon value='login' @click='logout')
+      v-icon mdi-logout
       
   v-navigation-drawer(v-model='drawer' fixed temporary)
     v-list-item
       v-list-item-content
         v-list-item-title.title
-          | Application
+          | Publish
         v-list-item-subtitle
-          | subtext
+          | work
     v-divider
     v-list(nav dense)
       v-list-item-group(v-model='group' active-class='deep-purple--text text--accent-4')
@@ -48,7 +48,8 @@ export default {
   },
   data: () => ({
     drawer: false,
-    msg: "ok",
+    msg: null,
+    userName:null,
     group: null,
     photo:"@/assets/avatars/man.png",
   }),
@@ -60,10 +61,16 @@ export default {
     })
   },
    methods:{
+    logout() {
+
+      localStorage.removeItem("LoggedUser"); 
+      this.$router.push({ name: 'Home',params:{ msg: `Bay.. ${this.userName}`}   }); 
+    },
     setUserInfo() {
       if (localStorage.getItem('LoggedUser')) {
         let u = JSON.parse(localStorage.getItem('LoggedUser'))
         console.log("layoutMembers ", u.user.name)
+        this.userName= u.user.name
         this.msg= u.user.name+", Welcome!"
         if (u.user.profilePicture.length>0){
           this.photo = u.user.profilePicture

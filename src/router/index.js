@@ -15,6 +15,18 @@ const routes = [
        title: 'Home',
        layout:'LayoutGuest'
     }
+    // children: [
+    //   {
+    //     path: ':id',
+    //     component: Home,
+    //     // only authenticated users can create posts
+    //     meta: { 
+    //       requiresAuth: true,
+    //       layout:'LayoutMembers',
+    //       title: 'Home'
+    //     }
+    //   }
+    // ]
   },
   {
     path: '/about',

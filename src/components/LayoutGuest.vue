@@ -1,26 +1,22 @@
 <template lang='pug'>
 v-app#layoutGuest
-  v-system-bar(app)
-    v-spacer
-    v-icon mdi-account-alert
-    v-icon mdi-circle
   v-app-bar(app)
     v-app-bar-nav-icon(@click='drawer = !drawer')
-    v-toolbar-title Application
+    v-toolbar-title Publish
     v-spacer
     v-btn(icon value='login' to="/login")
       v-icon mdi-login
     v-btn(icon)
-      v-icon mdi-heart
+      v-icon mdi-text-search
     v-btn(icon)
       v-icon mdi-dots-vertical  
   v-navigation-drawer(v-model='drawer' fixed temporary)
     v-list-item
       v-list-item-content
         v-list-item-title.title
-          | Application
+          | Publish
         v-list-item-subtitle
-          | subtext
+          | work
     v-divider
     v-list(nav dense)
       v-list-item-group(v-model='group' active-class='deep-purple--text text--accent-4')

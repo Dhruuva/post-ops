@@ -2,17 +2,20 @@
   v-main.grey.lighten-2
     v-container
       v-row
-        hello-world
+        v-sheet.mt-10( width="850" height="350" )
+        
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
 
+ // import WeDoChart from 'https://unpkg.com/we-do-chart'
+  
   export default {
     name: 'Home',
 
     components: {
-      HelloWorld,
+      
+     
     },
   }
 </script>
