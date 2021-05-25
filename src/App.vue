@@ -23,10 +23,10 @@ export default {
   },
   watch: {
     $route(to) {
-      // set layout by route meta
+     
       if (to.meta.layout !== undefined) {
         let isAuth = this.getToken()
-        console.log( " APP.vue is Auth ", this.getToken(),to)
+      
         if (isAuth && to.name=="Home") {
           this.layout = "LayoutMembers"
         } else {
@@ -40,9 +40,6 @@ export default {
 
 }
 </script>
-<!-- <style>
-  @import 'https://unpkg.com/we-do-chart/we-do-chart.min.css'
-</style> -->
 
 <style lang="stylus">
 

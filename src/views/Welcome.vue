@@ -24,14 +24,15 @@
               v-text-field(v-model='form.OAuthProvider' label='OAuthProvider' hide-details solo single-line disabled)
 
             v-card-actions
-              v-btn.secodary(@click='getUser' dark) Get user
-              v-btn(color='success' :disabled = "noChanged==true" @click='updateUser()') 
-                v-icon(left dark) mdi-check
-                | Save Changes
-              v-btn(color='primary' @click='getUser' :disabled = "noChanged==true" ) 
-                v-icon(left dark) mdi-cancel
-                | Decline 
-              v-btn.primary(@click='test') test
+              v-col( cols="12" sm="10" md="12")
+                v-btn.secodary.ma-1(@click='getUser' dark) Get user
+                v-btn.ma-1(color='success' :disabled = "noChanged==true" @click='updateUser()') 
+                  v-icon(left dark) mdi-check
+                  | Save Changes
+                v-btn.ma-1(color='primary' @click='getUser' :disabled = "noChanged==true" ) 
+                  v-icon(left dark) mdi-cancel
+                  | Decline 
+              
         v-col( cols="12" sm="7" md="7")
           v-sheet.ma-1( align="left" justify="center"  )
             v-btn.info.ma-2(@click='getAllUser') Get All user  
@@ -52,13 +53,6 @@
                 td.truncate(nowrap) {{item.date | toShortTime}}       
 
       v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
-        v-col( cols="12" sm="12" md="12") 
-          p {{Title}}
-         
-          v-text-field(label="token" :value="token")
-          v-btn.secodary(@click='viewPayload(token)') Get user
-          v-btn.info(@click='getAllUser') Get All user
-
           
 </template>
 
@@ -69,7 +63,7 @@
     props: {
       token: {
         type:String,
-        default: () =>(null) // Ratio fontSize px to Width px, where t for time text,l for ticks text, k is for stroke
+        default: () =>(null)  
       },
     },   
     data:()=>({
@@ -94,7 +88,7 @@
       this.$nextTick(function () {
         this.setRoleTypes(user_types)
         this.getUser()
-        console.log( this.noChanged, "<----user_types ",user_types)
+      
       })
     },
     watch: {
@@ -102,16 +96,14 @@
         handler: function(v) {
           v.a=1
           this.noChanged= false
-          console.log (v ,'Form changed', this.noChanged,v )
+         
         },
         deep: true
       },
       authType(){
         this.noChanged= false
       },
-      avatar(){
-         console.log("Avatarv==>", this.avatar )
-      }
+      
     },  
 
     computed: {
@@ -121,7 +113,7 @@
       canRemove(){
        
         let rtn =( this.form.permissionLevel && this.form.permissionLevel>2000)? false:true
-        console.log( this.permissionLevel , "<== this.permissionLevel", rtn, " +++")
+        
         return rtn
       }
     },
@@ -129,7 +121,7 @@
     methods:{
       setAvatar(a){
         this.form.profilePicture=require(`@/assets/avatars/${a}`)
-        console.log(a)
+        
       },
       toggle() {
         this.autoselectMenu = !this.autoselectMenu
@@ -138,30 +130,17 @@
           while( this.roles.length>0) this.roles.pop()
           this.roles=Object.keys(o.permissionLevels).slice(0)
       },
-      test(){
-        let usr={
-          "_id": `${this.form._id}`,
-          "name": `${this.form.name}`,
-          "email": `${this.form.email}`,
-          "permissionLevel": user_types.permissionLevels[this.authType],
-          "familyname": `${this.form.familyname}`
-
-        }
-         let l = JSON.stringify(usr);
-          console.log( this.myIDis(this.token)," 333-----Test ", l)  
-      },
-
       async getUser(){
-        console.log( "<<<< this id token ", this.token,this.getToken())
-        let validToken = (this.token)? this.token: null
-        if (!validToken ){ 
-          validToken = this.getToken()
-        }
-          console.log( " Get token from store @@@" ,this.getToken())
-        if (!validToken ){
-          this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
-          return
-        }  
+         let validToken = (this.token)? this.token: null
+          if (!validToken ){ 
+            validToken = this.getToken()
+          }
+           
+          if (!validToken ){
+            this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+            return
+          }  
+        
         await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+this.myIDis(validToken), {
           method: 'GET',
           headers: {
@@ -173,7 +152,7 @@
          })
         .then(response => response.json())
         .then(data => {
-          console.log(data.success,'22Success:', data);
+          
           //{error: "Need to pass a valid token"} 403
           if (data.error  &&  data.error == "Need to pass a valid token"){
             this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
@@ -182,7 +161,7 @@
           this.form=data
           let fld = Object.keys(user_types.permissionLevels)
           let l = fld.map(a=>(user_types.permissionLevels[a] == data.permissionLevel)? a:null ).find(v=>v)
-          console.log(l, "++++data.permissionLevel" )
+       
           this.authType=(l)? l:null
           setTimeout( ()=> {this.noChanged=true}  ,1)
           
@@ -198,14 +177,9 @@
           let u =(token.split(' ').length>1)? jwt_decode(token.split(' ')[1]):jwt_decode(token);
           return u.id
       },
-      viewPayload(val){//dev
-        console.log(val.split(' ')[0])
-        //console.log(window.atob(val.split(' ')[1]))
-        let u = jwt_decode(val.split(' ')[1]);
-        console.log("viewPayload " , u.id )
-      },
+    
       async getAllUser(){
-        console.log( " this id token ", process.env.VUE_APP_BACKEND_URL)
+       
         await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/', {
           method: 'GET',
           headers: {
@@ -216,12 +190,12 @@
          })
         .then(response => response.json())
         .then(data => {
-          console.log('Success:', data);
+         
            if (data.length>0 ){
             let h =Object.keys(data[0]).map(a=>({
               text:a,value:a, align: "center",divider:true,width:100
             }) ).filter(a=> ["OAuthId","OAuthProvider","permissionLevel"].indexOf(a.text)<0)
-            console.log(h)
+           
             //let d=["OAuthId","OAuthProvider"]
             while (this.userTbl.hd.length>0) this.userTbl.hd.pop()
             this.userTbl.hd = [...h]
@@ -236,7 +210,16 @@
         });
       },
       async updateUser(){
-         console.log(user_types.permissionLevels[this.authType], "<=== user_types ")  
+        let validToken = (this.token)? this.token: null
+          if (!validToken ){ 
+            validToken = this.getToken()
+          }
+           
+          if (!validToken ){
+            this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+            return
+        }  
+       
           let usr={
             "_id": `${this.form._id}`,
             "name": `${this.form.name}`,
@@ -246,13 +229,13 @@
             "profilePicture": `${this.form.profilePicture}`
           }
           let l = JSON.stringify(usr);
-          console.log(user_types, " this id token ", l)  
-          await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+this.myIDis(this.token), {
+         
+          await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+this.myIDis(validToken), {
             method: 'PATCH',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json;charset=utf-8',
-              'Authorization':  this.token,
+              'Authorization':  validToken,
             }
             ,body: l,
            })
@@ -262,7 +245,7 @@
                 this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
                 return
               }  
-              console.log('Success:', data);
+             this.noChanged=true
                
             })
             .catch((error) => {
@@ -273,12 +256,22 @@
 
       },
       async deleteUser(id){
+          let validToken = (this.token)? this.token: null
+            if (!validToken ){ 
+              validToken = this.getToken()
+            }
+             
+            if (!validToken ){
+              this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+              return
+          }  
+
           await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+id, {
             method: 'DELETE',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json;charset=utf-8',
-              'Authorization':  this.token,
+              'Authorization':  validToken,
             }
            
            })
@@ -288,9 +281,9 @@
                 this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
                 return
               }  
-              console.log('Success:', data);
+       
               let i = this.userTbl.rows.findIndex(a=>a._id==id)
-              console.log('IIIIIIIIIIIIII:', i);
+      
               this.userTbl.rows.splice(i,1)
             })
             .catch((error) => {

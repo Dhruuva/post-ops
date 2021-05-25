@@ -69,7 +69,7 @@ export default {
     setUserInfo() {
       if (localStorage.getItem('LoggedUser')) {
         let u = JSON.parse(localStorage.getItem('LoggedUser'))
-        console.log("layoutMembers ", u.user.name)
+      
         this.userName= u.user.name
         this.msg= u.user.name+", Welcome!"
         if (u.user.profilePicture.length>0){

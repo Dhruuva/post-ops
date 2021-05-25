@@ -10,7 +10,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-console.log("VUE_APP_BACKEND_URL="  , process.env.VUE_APP_BACKEND_URL) 
+//console.log("VUE_APP_BACKEND_URL="  , process.env.VUE_APP_BACKEND_URL) 
 Vue.config.productionTip = false
 
 Vue.component("my-icon", {

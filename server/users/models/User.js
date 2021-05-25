@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+//const Post = mongoose.model("Post");
 // Create Schema
 const userSchema = new Schema({
   name: {
@@ -49,6 +49,22 @@ const userSchema = new Schema({
 userSchema.statics.findByEmail = function(email) {
   return this.find({ email: email });
 };
+
+userSchema.pre('remove', function(next) {
+    // Remove all the docs that refers
+    this.model('Post').remove({ author: this._id }, next());
+});
+
+userSchema.pre('save', function(next) {
+  if (!this.isNew) return next();
+
+  if (!validatePresenceOf(this.password) && !this.skipValidation()) {
+    next(new Error('Invalid password'));
+  } else {
+    next();
+  }
+});
+
 /*
 userSchema.statics.findById = function(id) {
   return super.findById(id).then(result => {
@@ -81,6 +97,8 @@ userSchema.statics.list = function(perPage, page) {
 
 userSchema.statics.removeById = function(id) {
   return new Promise((resolve, reject) => {
+
+
     this.deleteOne({ _id: id }, err => {
       if (err) {
         reject(err);

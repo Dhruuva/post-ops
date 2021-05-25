@@ -71,7 +71,7 @@
       this.$nextTick(function () {
         
         this.myID=this.myIDis();
-        console.log( this.myIDis(), "<----myIDS ",);
+        
       })
     },
     watch:  {
@@ -80,7 +80,7 @@
           this.content = ""
           this.title = ""
           setTimeout( ()=> {this.$refs.form.resetValidation()}  ,50)
-          console.log("Dialog Close")
+        
         }
       }
     },
@@ -90,7 +90,7 @@
         const valid = this.$refs.form.validate();
         if(valid) { 
           if (!this.validToken )  this.validToken = this.getToken()
-          console.log( " Get token from store @@@" ,this.validToken)
+        
           if (!this.validToken ){
             this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
             return

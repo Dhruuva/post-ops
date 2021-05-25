@@ -1,0 +1,31 @@
+40b74bc 2021-05-25 |  Fix test edit home (HEAD -> dev)
+845161e 2021-05-24 |  add logout
+c42d471 2021-05-21 |  Finish update post
+031c880 2021-05-21 | make delete user
+d5f12ce 2021-05-19 |  Post adeed
+dcfe477 2021-05-18 |  mail.ru and git login add
+701f055 2021-05-18 |  Add login User images
+63bf2b6 2021-05-15 | google login done
+d1e2af6 2021-05-14 |  delete user done
+02dcd14 2021-05-14 | avatar changed update done
+c265989 2021-05-14 | Starting Avatar update
+3e38a50 2021-05-09 |  Edit User forms done
+8b5a8d9 2021-05-09 |  before add flex on Welcome
+58e0ff6 2021-05-08 |  add profile
+ba5162a 2021-05-08 | add dynamic layouts
+8d773bd 2021-05-08 |  Start branch commit
+a9d6394 2021-05-08 |  Before make new branch for Dynamic layouts (master)
+6496260 2021-05-07 |  payload decode get user by id private route
+81a2f4c 2021-05-07 |  fix fetch
+582b43a 2021-05-06 |  register done
+40a6905 2021-05-06 |  finish to login test
+f60583d 2021-05-06 |  before add cors
+ace9ea7 2021-05-05 |  add mongoose and donet
+d410778 2021-05-05 |  before add express
+3bc32d1 2021-05-05 |  Add Register Form
+6e02827 2021-05-03 |  make login form
+14d3daa 2021-05-03 |  add app and router
+3512ea8 2021-05-03 |  add pug
+0da95a1 2021-05-03 |  add vuetify
+0a11f28 2021-05-03 |  init
+025c7df 2021-05-03 | init
