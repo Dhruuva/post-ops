@@ -23,12 +23,14 @@ v-main.grey.lighten-2
         v-card-actions
           v-row(align="center" justify="center")
             v-btn-toggle.mt-n3( tile color='deep-purple accent-3' group)
-              v-btn(icon)
+              v-btn(icon href='http://localhost:5000/api/auth/google' )
                 v-icon mdi-google
-              v-btn(icon)
-                v-icon mdi-facebook
-              v-btn(icon)
+              v-btn(icon href='http://localhost:5000/api/auth/mailru')
+                v-icon mdi-at
+              v-btn(icon href='http://localhost:5000/api/auth/github')
                 v-icon mdi-github 
+              v-btn(icon href='http://localhost:5000/api/auth/facebook')
+                v-icon mdi-facebook  
                         
 </template>
 

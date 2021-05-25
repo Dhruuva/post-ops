@@ -85,6 +85,12 @@ const routes = [
   },
 ]
 
+// router.afterEach((to) => {
+//   if (to.meta && to.meta.title) {
+//     document.title = to.meta.title + ' | Any suffix';
+//   }
+// });
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

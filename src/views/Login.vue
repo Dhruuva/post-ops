@@ -24,9 +24,11 @@ v-main.grey.lighten-3
                 v-btn(icon href='http://localhost:5000/api/auth/google' )
                   v-icon mdi-google
                 v-btn(icon href='http://localhost:5000/api/auth/mailru')
-                  v-icon mdi-facebook
+                  v-icon mdi-at
                 v-btn(icon href='http://localhost:5000/api/auth/github')
                   v-icon mdi-github 
+                v-btn(icon href='http://localhost:5000/api/auth/facebook')
+                  v-icon mdi-facebook  
           v-divider            
           v-card-actions 
             v-subheader  DON'T HAVE AN ACCOUNT?   
@@ -37,6 +39,7 @@ v-main.grey.lighten-3
 
 <script>
   import jwt_decode from "jwt-decode";
+  // import mdiRu from "@/assets/mail_ru_logo.ico";
   export default {
     data: () => ({
       show: false,
@@ -44,6 +47,9 @@ v-main.grey.lighten-3
       name: "todhruva@mail.ru",
       pwd: "qwerexQ1"
     }),
+    // components: {
+    //     'mdi-ru':mdiRu
+    // },
     mounted() {
       this.$nextTick(function () {
         let q = this.$route.query.token

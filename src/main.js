@@ -13,6 +13,12 @@ dotenv.config()
 console.log("VUE_APP_BACKEND_URL="  , process.env.VUE_APP_BACKEND_URL) 
 Vue.config.productionTip = false
 
+Vue.component("my-icon", {
+  template: `<svg height="24" width="24">
+        <circle cx="12" cy="12" r="9" fill="red" />
+    </svg>`
+});
+
 new Vue({
   router,
   vuetify,

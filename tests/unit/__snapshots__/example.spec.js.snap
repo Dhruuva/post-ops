@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home.vue Home.vue is work 1`] = `
+<v-main class="grey lighten-2">
+  <v-container>
+    <v-row>
+      <v-sheet width="850" height="350" class="mt-10"></v-sheet>
+    </v-row>
+  </v-container>
+</v-main>
+`;

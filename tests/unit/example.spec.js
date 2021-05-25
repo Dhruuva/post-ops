@@ -1,12 +1,25 @@
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import Vue from 'vue'
+import { createLocalVue, mount } from '@vue/test-utils'
+import Home from '@/views/Home'
+import Vuetify from 'vuetify'
+Vue.config.silent = true;
+describe('Home.vue', () => {
+	const localVue = createLocalVue()
+    let vuetify
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
-  })
+     beforeEach(() => {
+	    vuetify = new Vuetify()
+	 })
+
+	 it('Home.vue is work', () => {
+	    
+	    const wrapper = mount(Home, {
+	    	localVue,
+     		vuetify
+
+	    })
+
+	    //expect(wrapper.text()).toMatch("fhf")
+	    expect(wrapper.html()).toMatchSnapshot()
+	})
 })
