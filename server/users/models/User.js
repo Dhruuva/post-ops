@@ -51,7 +51,7 @@ userSchema.statics.findByEmail = function(email) {
 };
 
 userSchema.pre('remove', function(next) {
-    // Remove all the docs that refers
+   console.log("Remove all the docs that refers");
     this.model('Post').remove({ author: this._id }, next());
 });
 
