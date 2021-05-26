@@ -8,8 +8,10 @@ const ADMIN_PERMISSION = config.permissionLevels.ADMIN;
 
 exports.onlyAuthorOrAdminCanDoThisAction = (req, res, next) => {
   let user_permission_level = parseInt(req.jwt.permissionLevel);
+  console.log( "onlyAuthorOrAdminCanDoThisAction=  ",user_permission_level )
+  console.log( req.params.postId, "onlyAuthorOrAdminCanDoThisAction  req.jwt.id=  ",req.jwt.id )
   let userId = req.jwt.id;
-  let postid = req.params.id;
+  let postid = req.params.postId;
   if (user_permission_level & ADMIN_PERMISSION) {
     return next();
   } else {

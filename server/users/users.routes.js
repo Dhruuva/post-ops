@@ -11,6 +11,10 @@ const PAID = config.permissionLevels.PAID_USER;
 const FREE = config.permissionLevels.NORMAL_USER;
 
 router.get("/", [UsersController.list]);
+router.get("/posts/:userId", [
+   UsersController.userPost
+]);
+
 router.get("/:userId", [
   AuthMiddleware.validJWTNeeded,
   UsersController.getById
@@ -24,6 +28,10 @@ router.delete("/:userId", [
   AuthMiddleware.validJWTNeeded,
   PermissionsMiddleware.minimumPermissionLevelRequired(ADMIN),
   UsersController.removeById
+]);
+
+router.delete("/posts/:userId", [
+   UsersController.removePostByUserId
 ]);
 
 module.exports = router;

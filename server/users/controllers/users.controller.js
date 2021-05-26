@@ -113,6 +113,18 @@ exports.getById = (req, res) => {
     });
 };
 
+exports.userPost = (req, res) => {
+  User.userPost(req.params.userId)
+    .then(result => {
+      return res.status(200).send(result);
+    })
+    .catch(err => {
+      return res
+        .status(400)
+        .send({ error: "Error. Probably Wrong id.", err: err });
+    });
+};
+
 exports.patchById = (req, res) => {
   // We make sure to not patch the permissionLevel and id
  // delete req.body["permissionLevel"];
@@ -136,10 +148,26 @@ exports.patchById = (req, res) => {
     User.patch(req.params.userId, req.body).then(result => {
       res.status(200).send({});
     });
+    
   }
 };
+
 exports.removeById = (req, res) => {
   User.removeById(req.params.userId).then(result => {
     res.status(200).send({});
+  }).catch(err => {
+      return res
+        .status(400)
+        .send({ error: "Error. Probably Wrong id.", err: err.stack, test:"fgh" });
+  });
+};
+
+exports.removePostByUserId = (req, res) => {
+  User.userPostErase(req.params.userId).then(result => {
+    res.status(200).send({});
+  }).catch(err => {
+      return res
+        .status(400)
+        .send({ error: "Error. Probably Wrong id.", err: err.stack });
   });
 };

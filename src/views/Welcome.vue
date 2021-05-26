@@ -53,7 +53,13 @@
                 td.truncate(nowrap) {{item.date | toShortTime}}       
 
       v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
-          
+      v-dialog.pa-2(v-model="errorDlg"  max-width="490" )
+        v-card( v-if="errorDlg" max-height='900'  )
+          v-toolbar.primary.darken-1.white--text( dense class="font-weight-medium") Error
+          v-card-title( class="headline")  {{ error.msg }}
+          v-card-text {{error.dtl }}
+          v-card-actions 
+            v-btn.secondary.lighten-3( @click.stop='errorDlg=false'  ) Close  
 </template>
 
 <script>
@@ -67,6 +73,8 @@
       },
     },   
     data:()=>({
+      error:{msg:'',dtl:'.'},
+      errorDlg: false,
       Title: "Welcome",
       form:{profilePicture:"", name:"",email:"",date:"",familyname:"",permissionLevel:0},
       noChanged:true,
@@ -82,7 +90,7 @@
         {f:'boy.png'},
         {f:'smile.png'},
       ]
-    
+      
     }),
     mounted() {
       this.$nextTick(function () {
@@ -168,8 +176,8 @@
           return
         })
         .catch((error) => {
-          console.error('Error121212:', error);
-          return error
+         this.error = {msg:'Fatal error',dtl:error}
+         this.errorDlg=true
         });
 
       },
@@ -205,8 +213,8 @@
            }
         })
         .catch((error) => {
-          console.error('Error121212:', error);
-          return error
+          this.error = {msg:'Fatal error',dtl:error}
+          this.errorDlg=true
         });
       },
       async updateUser(){
@@ -249,8 +257,8 @@
                
             })
             .catch((error) => {
-              console.error('Error121212:', error);
-              return error
+              this.error = {msg:'Fatal error',dtl:error}
+              this.errorDlg=true
             });
           
 
@@ -280,15 +288,17 @@
               if (data.error  &&  data.error == "Need to pass a valid token"){
                 this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
                 return
-              }  
-       
-              let i = this.userTbl.rows.findIndex(a=>a._id==id)
-      
-              this.userTbl.rows.splice(i,1)
+              }  else if (data.error ){
+                this.error = {msg: data.error, dtl:data.err}
+                this.errorDlg=true
+              } else {
+                let i = this.userTbl.rows.findIndex(a=>a._id==id)
+                this.userTbl.rows.splice(i,1)
+              }
+              
             })
             .catch((error) => {
-              console.error('Error121212:', error);
-              return error
+              this.error = {msg:'Fatal error',dtl:error}
             });
 
       },

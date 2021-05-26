@@ -50,19 +50,74 @@ userSchema.statics.findByEmail = function(email) {
   return this.find({ email: email });
 };
 
-userSchema.pre('remove', function(next) {
-   console.log("Remove all the docs that refers");
-    this.model('Post').remove({ author: this._id }, next());
+userSchema.statics.userPost = async function(uid) {
+  console.log("userSchema.statics.userPost ", uid)
+  //await this.model('Post').({ author: uid }).exec();
+  return new Promise( (resolve, reject) => {
+    this.model('Post').find({ author: uid }, function (err, posts) {
+      
+      if(err) {
+        console.warn(' userSchema.statics.userPost EError', err);
+          reject(err);
+        } else if(posts) {
+          console.log(' userSchema.statics.userPost OK', posts);
+          resolve(posts); 
+        } else {
+          console.log('userSchema.statics.userPost No results');
+          reject(err);
+        }
+    });
+  });  
+};
+
+userSchema.statics.userPostErase = async function(uid) {
+  console.log("userSchema.statics.userPostErase ", uid)
+  //await this.model('Post').({ author: uid }).exec();
+  return new Promise( (resolve, reject) => {
+    this.model('Post').deleteMany({ author: uid }, function (err, posts) {
+        if(err) {
+          console.log(' userSchema.statics.userPost EError', err);
+            reject(err);
+          } else  {
+            console.log(' userSchema.statics.userPost OK', posts);
+            resolve(posts); 
+          }
+      })
+  }) 
+};
+
+
+userSchema.pre('deleteOne', { query: true, document: false }, async function(next) {
+  let uid = this.getQuery()['_id']
+  console.log("deleteOne User post  that refers=  ",uid);
+  //await this.model('Post').deleteMany({ author: uid });
+  next()
+  // return new Promise((resolve, reject) => {
+  //   this.model('Post').deleteMany({ author: uid }, function (err, results) {
+  //     console.log(' Pre deleteOne results -->')
+  //     if(err) {
+  //       console.log(' Pre deleteOne results  EError', err);
+  //       reject(err);
+  //     } else  {
+  //       console.log(' Pre deleteOne results OK', results);
+  //       resolve("ol")
+  //     }
+  //   });
+  //   //resolve("ok");
+  // });
+
 });
 
+// add later to test pre 
 userSchema.pre('save', function(next) {
   if (!this.isNew) return next();
-
-  if (!validatePresenceOf(this.password) && !this.skipValidation()) {
-    next(new Error('Invalid password'));
-  } else {
-    next();
-  }
+ 
+   next();
+  // if (!validatePresenceOf(this.password) && !this.skipValidation()) {
+  //   next(new Error('Invalid password'));
+  // } else {
+  //   next();
+  // }
 });
 
 /*
@@ -97,12 +152,12 @@ userSchema.statics.list = function(perPage, page) {
 
 userSchema.statics.removeById = function(id) {
   return new Promise((resolve, reject) => {
-
-
     this.deleteOne({ _id: id }, err => {
       if (err) {
+        console.log("  removeById bad ", err)
         reject(err);
       } else {
+        console.log("  removeById good ", err)
         resolve(err);
       }
     });
