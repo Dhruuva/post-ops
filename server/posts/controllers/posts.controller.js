@@ -81,7 +81,7 @@ exports.removeById = (req, res) => {
 };
 
 exports.total = (req, res) => {
-  User.total().then(result => {
+  Post.total().then(result => {
     res.status(200).send({result});
   }).catch(err => {
       return res
