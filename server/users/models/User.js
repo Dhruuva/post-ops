@@ -128,6 +128,19 @@ userSchema.statics.list = function(perPage, page) {
   });
 };
 
+userSchema.statics.total = function() {
+  return new Promise((resolve, reject) => {
+    this.estimatedDocumentCount({})
+        .exec(function(err, t) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(t);
+        }
+      });
+  });
+};
+
 userSchema.statics.removeById = function(id) {
   return new Promise((resolve, reject) => {
     this.deleteOne({ _id: id }, err => {

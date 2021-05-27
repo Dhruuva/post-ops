@@ -1,22 +1,22 @@
 <template lang='pug'>
 v-app(id="layoutMembers")
-  v-system-bar(app)
+  v-system-bar(app )
     v-spacer
-    v-chip(class="ma-1" small) {{msg}}
+    v-chip(class="text-center indigo--text text--darken-6 font-weight-medium" small) {{msg}}
   v-app-bar(app)
-    v-app-bar-nav-icon(@click='drawer = !drawer')
-    v-toolbar-title Publish
+    v-app-bar-nav-icon(@click='drawer = !drawer' class="text-center indigo--text text--darken-6 font-weight-medium")
+    v-toolbar-title(class="text-center indigo--text text--darken-6 font-weight-medium") Publish
     v-spacer
-    v-btn(icon value='login' to="/welcome")
+    v-btn.pa-7(icon value='login' to="/welcome" outlined class="text-center indigo--text text--darken-6 font-weight-medium" )
       v-avatar(size=50)  
-        v-img.mr-3( :src="photo" alt='Avatar')
+        v-img( :src="photo" alt='Avatar')
     v-btn(icon value='login' @click='logout')
-      v-icon mdi-logout
+      v-icon(class="indigo--text text--darken-6 font-weight-medium") mdi-logout
       
   v-navigation-drawer(v-model='drawer' fixed temporary)
     v-list-item
       v-list-item-content
-        v-list-item-title.title
+        v-list-item-title.title(class="text-center indigo--text text--darken-6 font-weight-medium")
           | Publish
         v-list-item-subtitle
           | work
@@ -64,7 +64,12 @@ export default {
     logout() {
 
       localStorage.removeItem("LoggedUser"); 
-      this.$router.push({ name: 'Home',params:{ msg: `Bay.. ${this.userName}`}   }); 
+      if (this.$route.name!=="Home"){
+        this.$router.push({ name: 'Home',params:{ msg: `Bay.. ${this.userName}`}   }); 
+      } else{
+        this.$router.go(this.$router.currentRoute)
+      }
+      
     },
     setUserInfo() {
       if (localStorage.getItem('LoggedUser')) {

@@ -13,6 +13,7 @@ const PAID = config.permissionLevels.PAID_USER;
 const FREE = config.permissionLevels.NORMAL_USER;
 
 router.get("/feed/:page?", [PostsController.list]);
+router.get("/total", [PostsController.total]);
 router.get("/:id", [PostsController.getById]);
 router.post("/", [AuthMiddleware.validJWTNeeded, PostsController.insert]);
 router.patch("/:id", [

@@ -114,4 +114,17 @@ PostSchema.statics.findBySlug = function(slug) {
   return this.find({ slug: slug });
 };
 
+PostSchema.statics.total = function() {
+  return new Promise((resolve, reject) => {
+    this.estimatedDocumentCount({})
+        .exec(function(err, t) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(t);
+        }
+      });
+  });
+};
+
 mongoose.model("Post", PostSchema);

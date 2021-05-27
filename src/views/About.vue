@@ -7,8 +7,8 @@
             v-img( src="@/assets/avatars/man.png" alt='Avatar')
           v-text-field(label="Name " single-line)
           v-text-field(label="Email " single-line)
-          v-btn.ma-2(small ) Change Avatar
-          v-btn.ma-2(small ) Change Avatar  
+          v-btn.ma-2(small ) Sample
+         
       v-flex.d-md-inline( xs8 )
         v-sheet(height='50' color="green lighten-3" elevation="5" )   
 </template>

@@ -80,3 +80,13 @@ exports.removeById = (req, res) => {
   });
 };
 
+exports.total = (req, res) => {
+  User.total().then(result => {
+    res.status(200).send({result});
+  }).catch(err => {
+      return res
+        .status(400)
+        .send({ error: "Error. Probably Wrong id.", err: err.stack });
+  });
+};
+

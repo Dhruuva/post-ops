@@ -14,6 +14,9 @@ router.get("/", [UsersController.list]);
 router.get("/posts/:userId", [
    UsersController.userPost
 ]);
+router.get("/total", [
+   UsersController.total
+]);
 
 router.get("/:userId", [
   AuthMiddleware.validJWTNeeded,
