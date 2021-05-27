@@ -89,47 +89,25 @@ userSchema.statics.userPostErase = async function(uid) {
 
 userSchema.pre('deleteOne', { query: true, document: false }, async function(next) {
   let uid = this.getQuery()['_id']
-  console.log("deleteOne User post  that refers=  ",uid);
+  console.log("deleteOne User post  that refers=  ",uid ,this);
   //await this.model('Post').deleteMany({ author: uid });
-  next()
-  // return new Promise((resolve, reject) => {
-  //   this.model('Post').deleteMany({ author: uid }, function (err, results) {
-  //     console.log(' Pre deleteOne results -->')
-  //     if(err) {
-  //       console.log(' Pre deleteOne results  EError', err);
-  //       reject(err);
-  //     } else  {
-  //       console.log(' Pre deleteOne results OK', results);
-  //       resolve("ol")
-  //     }
-  //   });
-  //   //resolve("ok");
-  // });
 
-});
-
-// add later to test pre 
-userSchema.pre('save', function(next) {
-  if (!this.isNew) return next();
- 
-   next();
-  // if (!validatePresenceOf(this.password) && !this.skipValidation()) {
-  //   next(new Error('Invalid password'));
-  // } else {
-  //   next();
-  // }
-});
-
-/*
-userSchema.statics.findById = function(id) {
-  return super.findById(id).then(result => {
-    result = result.toJSON();
-    delete result._id;
-    delete result.__v;
-    return result;
+  return new Promise((resolve, reject) => {
+    mongoose.model('Post').deleteMany({ author: uid }, function (err, results) {
+      console.log(' Pre deleteOne results -->')
+      if(err) {
+        console.log(' Pre deleteOne results  EError', err);
+        reject(err);
+      } else  {
+        console.log(' Pre deleteOne results OK', results);
+        resolve("ok")
+      }
+    });
+    //resolve("ok");
   });
-};
-*/
+
+});
+
 userSchema.statics.create = function(dataEntity) {
   const new_entity = new this(dataEntity);
   return new_entity.save();
