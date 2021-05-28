@@ -4,7 +4,7 @@ const cors = require('cors');
 const listEndpoints = require('express-list-endpoints')
 const dotenv = require('dotenv')
 dotenv.config({path:__dirname+'/.env'})
-console.log(" Secret", process.env.JWT_SECRET, " dir >", __dirname)
+//console.log(" Secret", process.env.JWT_SECRET, " dir >", __dirname)
 
 app.use(express.json());
 app.use(cors())
@@ -57,9 +57,8 @@ app.use("/api/posts", postsRouter);
 // );
 // app.use(bodyParser.json());
 
-app.get("/favicon.ico", (req, res) => {
-  res.end();
-  console.log("favicon requested");
+app.get("/api/version", (req, res) => {
+  res.send({restApi:"post-ops: v1.0.0"})
   return;
 });
 const port = process.env.PORT || 5000;
