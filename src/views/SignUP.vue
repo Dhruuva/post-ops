@@ -31,12 +31,21 @@ v-main.grey.lighten-2
                 v-icon mdi-github 
               v-btn(icon href='http://localhost:5000/api/auth/facebook')
                 v-icon mdi-facebook  
-                        
+    v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
+      v-dialog.pa-2(v-model="errorDlg"  max-width="490" )
+        v-card( v-if="errorDlg" max-height='900'  )
+          v-toolbar.primary.darken-1.white--text( dense class="font-weight-medium") Error
+          v-card-title( class="headline")  {{ error.msg }}
+          v-card-text {{error.dtl }}
+          v-card-actions 
+            v-btn.secondary.lighten-3( @click.stop='errorDlg=false'  ) Close                      
 </template>
 
 <script>
   export default {
     data: () => ({
+      error:{msg:'',dtl:'.'},
+      errorDlg: false,
       password:'',
       rePassword:'',
       agCheckbox:false,
@@ -76,7 +85,7 @@ v-main.grey.lighten-2
       async submitForm () {
         const valid = this.$refs.form.validate();
         if(valid) {      
-          const rawResponse = await fetch(process.env.VUE_APP_BACKEND_URL+'api/auth/register', {
+          await fetch(process.env.VUE_APP_BACKEND_URL+'api/auth/register', {
                 method: 'POST',
                 headers: {
                   'Accept': 'application/json',
@@ -92,11 +101,19 @@ v-main.grey.lighten-2
               .then(response => response.json())
               .then(data => {
                 console.log('Success:', data);
+                if (data.email && data.email=="Email already exists"){
+                    this.error = {msg:'Email already exists',dtl:"Try another one"}
+                    this.errorDlg=true
+                    return 
+                }
+                this.$router.push({ name: 'Home',params:{ msg: `Hello, ${this.name}  please login now.`}   });
               })
               .catch((error) => {
-                console.error('Error:', error);
+                this.error = {msg:'Bad user ID or password',dtl:"please try again"}
+                this.errorDlg=true
+                return error
               });
-              console.log("login=",rawResponse);
+             
         }
       },
     },

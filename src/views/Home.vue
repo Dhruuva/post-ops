@@ -2,6 +2,7 @@
   v-main.grey.lighten-2
     v-container
       v-row.pa-5(justify="space-around")
+        v-banner.pa-2.green.accent-2.rounded-xl(width="100%"  v-if="msg" single-line class="font-weight-bold"  elevation="9"  icon="mdi-human-greeting") {{msg}}
         v-sheet.mt-10.rounded-xl( width="100%"  height="490"  elevation="13" )
           div.text-h3.mt-5(class="text-center indigo--text text--darken-6 font-weight-medium" ) Best publisher service !
           div.text-h5.pa-2(class="ml-5 text-left  brown--text text--darken-5" ) Start right now register and publish your thought for the world. Let others become know how things getting really on. 
@@ -24,11 +25,17 @@
 
   
   export default {
-   
+    props: {
+      msg: {
+        type:String,
+        default: () =>(null)  
+      },
+    },   
     data:()=>({
       name: 'Home',
       users: 0,
-      post: 0
+      post: 0,
+     
     }),
     mounted(){
       this.getAllUser()

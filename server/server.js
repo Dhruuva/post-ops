@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors())
 
 const session = require('express-session');
-// app.use(session({ secret: 'SECRET' }));
+app.use(session({ secret: 'SECRET' }));
 
 // global.__basedir = __dirname;
 // const my_config = __dirname.split('/').slice(0,-1).join('/')+'/.env'

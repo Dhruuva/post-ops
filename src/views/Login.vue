@@ -27,13 +27,20 @@ v-main.grey.lighten-3
                   v-icon mdi-at
                 v-btn(icon href='http://localhost:5000/api/auth/github')
                   v-icon mdi-github 
-                v-btn(icon href='http://localhost:5000/api/auth/facebook')
+                v-btn(icon href='http://localhost:5000/api/auth/facebook' disabled)
                   v-icon mdi-facebook  
           v-divider            
           v-card-actions 
             v-subheader  DON'T HAVE AN ACCOUNT?   
             v-btn(color='indigo lighten-2' to="signup" elevation="3") SIGN UP 
-           
+      v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
+        v-dialog.pa-2(v-model="errorDlg"  max-width="490" )
+          v-card( v-if="errorDlg" max-height='900'  )
+            v-toolbar.primary.darken-1.white--text( dense class="font-weight-medium") Error
+            v-card-title( class="headline")  {{ error.msg }}
+            v-card-text {{error.dtl }}
+            v-card-actions 
+              v-btn.secondary.lighten-3( @click.stop='errorDlg=false'  ) Close       
            
 </template>
 
@@ -42,6 +49,8 @@ v-main.grey.lighten-3
  
   export default {
     data: () => ({
+      error:{msg:'',dtl:'.'},
+      errorDlg: false,
       show: false,
       text: "Ole",
       name: "todhruva@mail.ru",
@@ -88,7 +97,8 @@ v-main.grey.lighten-3
           this.$router.push({ name: 'Welcome',params:{ token: data.token}   });
         })
         .catch((error) => {
-         
+          this.error = {msg:'Bad user ID or password',dtl:"please try again"}
+          this.errorDlg=true
           return error
         });
        
