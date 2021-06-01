@@ -3,22 +3,29 @@
     v-container
       v-row.pa-5(justify="space-around")
         v-banner.pa-2.green.accent-2.rounded-xl(width="100%"  v-if="msg" single-line class="font-weight-bold"  elevation="9"  icon="mdi-human-greeting") {{msg}}
-        v-sheet.mt-10.rounded-xl( width="100%"  height="490"  elevation="13" )
+        v-sheet.mt-10.rounded-xl( width="100%"  height="90"  elevation="5" )
           div.text-h3.mt-5(class="text-center indigo--text text--darken-6 font-weight-medium" ) Best publisher service !
-          div.text-h5.pa-2(class="ml-5 text-left  brown--text text--darken-5" ) Start right now register and publish your thought for the world. Let others become know how things getting really on. 
-          v-row.mt-5.pa-5(justify="space-around")
-            v-col( cols="12" md="6")
-              v-layout( align-center justify-space-around)
+        v-row.mt-2(justify="space-around")
+          v-col( cols="12" sm="6")
+            v-sheet.ml-2.rounded-sm( width="100%" height="250"  elevation="2" )
+              v-layout.pt-10( align-center justify-space-around)
                 div
                   v-chip.primary.lighten-3(  close close-icon="mdi-account" color="blue"
                   link  outlined) Users 
                   v-chip.red( link  outlined) {{users}}
-            v-col( cols="12" md="6")
-               v-layout( align-center justify-space-around)
+              div.text-h5.pa-5(class="ml-5 text-center  brown--text text--darken-5" ) Start right now register and publish your thought for the world.    
+          v-col( cols="12" sm="6") 
+            v-sheet.rounded-sm.mr-5( width="100%" height="250"  elevation="2" )
+              v-layout.pt-10( align-center justify-space-around)
                 div
                   v-chip.primary.lighten-3(  close close-icon="mdi-printer" color="blue"
                   link  outlined) Posts 
                   v-chip.red( link  outlined) {{post}} 
+              v-layout( align-center justify-space-around)
+                div.text-h5.pa-5(class="ml-5 text-left  brown--text text--darken-5" ) Let others become know how things getting really on.    
+
+          v-row.mt-5.pa-5(justify="space-around")
+           
     v-dialog(v-model='loading' hide-overlay persistent width='300')
       v-card(color='primary lighten-3')
         v-card-text

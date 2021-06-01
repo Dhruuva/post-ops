@@ -6,9 +6,9 @@ v-app#layoutGuest
     v-spacer
     v-btn(icon value='login' to="/login")
       v-icon mdi-login
-    v-btn(icon)
+    v-btn(icon disabled)
       v-icon mdi-text-search
-    v-btn(icon)
+    v-btn(icon disabled)
       v-icon mdi-dots-vertical  
   v-navigation-drawer(v-model='drawer' fixed temporary)
     v-list-item
