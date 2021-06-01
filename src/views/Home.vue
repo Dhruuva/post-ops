@@ -70,10 +70,10 @@
               }
             })
             .then(response => {
-               console.log(response.status);
+              
                return response.json()})
             .then(data => {
-              console.log(data.result,' Post add Success:', data);
+             
               this.users=data.result
               this.loading=false
             })
@@ -94,7 +94,7 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(data.result,' Post add Success:', data);
+             
               this.post=data.result
 
             })

@@ -72,7 +72,7 @@
         
         this.myID=this.myIDis();
 
-        console.log( this.myID," valid token ",this.getToken())
+        
         
       })
     },
@@ -117,8 +117,7 @@
                   this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
                   return
                 }  
-                console.log(' Post add Success:', data.data);
-                //this.items.splice(0,1,data.data)
+              
                 this.items.unshift(data.data)
                 if (this.dialog) this.dialog=false
                 this.loading = false
@@ -149,7 +148,7 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(' Post add Success:', data);
+             
               while (this.items.length>0) this.items.pop()
               this.items=[...data]   
               this.loading = false
@@ -163,9 +162,8 @@
       //__________   
       } ,
       async killPost(id) {  
-        let i = this.items.map(a=>a._id).indexOf(a=>a._id==id)
-          console.log('IIIIIIIIIIIIII:', i, this.items.findIndex(a=>a._id==id));
-          console.log('-----------:', id, this.items.map(a=>a._id));
+        
+        
         this.loading = true
         await fetch(process.env.VUE_APP_BACKEND_URL+'api/posts/'+id, {
             method: 'DELETE',
@@ -178,7 +176,7 @@
            })
             .then(response => response.json())
             .then(data => {
-              console.log('Success:', data);
+              
               if (data.error  &&  data.error == "Need to pass a valid token"){
                 localStorage.removeItem("LoggedUser"); 
                 this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
@@ -189,7 +187,7 @@
               this.loading = false
             })
             .catch((error) => {
-              console.error('Error121212:', error);
+              console.error('Error:', error);
               this.loading = false
               return error
             });
@@ -198,7 +196,7 @@
         this.cPost = p //{...p}
         this.content=p.content;
         this.title =p.title
-        console.log(" -->", JSON.stringify(this.cPost))
+        
         this.dialog = true
 
       },
@@ -209,7 +207,7 @@
         const valid = this.$refs.form.validate();
         if(valid) { 
           if (!this.validToken )  this.validToken = this.getToken()
-          console.log( " Get token from store @@@" ,this.validToken)
+          
           if (!this.validToken ){
             localStorage.removeItem("LoggedUser"); 
             this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
@@ -231,7 +229,7 @@
                   this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
                   return
                 }  
-                console.log(' PATCH add Success:', data.data);
+               
                 this.cPost.content=this.content
                 this.cPost.title=this.title
                 this.$refs.form.reset()
