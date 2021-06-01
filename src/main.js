@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
+import mixin from './plugins/global' // Here globals methods
 import router from './router'
 import vuetify from './plugins/vuetify'
-import mixin from './plugins/global' // Here globals methods
+
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import './filters'

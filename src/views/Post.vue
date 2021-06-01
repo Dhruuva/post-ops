@@ -71,6 +71,8 @@
       this.$nextTick(function () {
         
         this.myID=this.myIDis();
+
+        console.log( this.myID," valid token ",this.getToken())
         
       })
     },
@@ -111,6 +113,7 @@
               .then(response => response.json())
               .then(data => {
                 if (data.error  &&  data.error == "Need to pass a valid token"){
+                  localStorage.removeItem("LoggedUser"); 
                   this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
                   return
                 }  
@@ -131,6 +134,7 @@
       async loadPosts () {
         if (!this.validToken )  this.validToken = this.getToken()
         if (!this.validToken ){
+          localStorage.removeItem("LoggedUser"); 
           this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
           return
         }
@@ -176,6 +180,7 @@
             .then(data => {
               console.log('Success:', data);
               if (data.error  &&  data.error == "Need to pass a valid token"){
+                localStorage.removeItem("LoggedUser"); 
                 this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
                 return
               }  
@@ -206,6 +211,7 @@
           if (!this.validToken )  this.validToken = this.getToken()
           console.log( " Get token from store @@@" ,this.validToken)
           if (!this.validToken ){
+            localStorage.removeItem("LoggedUser"); 
             this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
             return
           }

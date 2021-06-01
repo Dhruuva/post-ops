@@ -28,6 +28,7 @@ export default Vue.mixin({
     },
     myIDis(){
       let token = this.getToken()
+      if (!token) return
       let u =(token && token.split(' ').length>1)? jwt_decode(token.split(' ')[1]):jwt_decode(token);
           return u.id
     },

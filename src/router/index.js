@@ -11,6 +11,7 @@ const routes = [
     name: 'Home',
     component: Home,
     props: true,
+ 
     meta: {
        visible: false,
        title: 'Home',
@@ -21,7 +22,7 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-
+    beforeEnter : guardMyroute,
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
     meta: {
       visible: false,
@@ -52,6 +53,7 @@ const routes = [
   {
     path: '/welcome',
     name: 'Welcome',
+    beforeEnter : guardMyroute,
     component: () => import(/* webpackChunkName: "about" */ '../views/Welcome.vue'),
     props: true,
     meta: {
@@ -63,6 +65,7 @@ const routes = [
   {
     path: '/post',
     name: 'Post',
+    beforeEnter : guardMyroute,
     component: () => import(/* webpackChunkName: "about" */ '../views/Post.vue'),
     props: true,
     meta: {
@@ -73,16 +76,28 @@ const routes = [
   },
 ]
 
-// router.afterEach((to) => {
-//   if (to.meta && to.meta.title) {
-//     document.title = to.meta.title + ' | Any suffix';
-//   }
-// });
+function guardMyroute(to, from, next){
+  if (localStorage.getItem('LoggedUser')){
+    next();
+
+  } else {
+    next('/login');
+  }
+  
+}
+
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
+
+router.afterEach((to) => {
+  if (to.meta && to.meta.title) {
+    document.title = to.meta.title 
+  }
+
+});
 
 export default router

@@ -139,15 +139,15 @@
           this.roles=Object.keys(o.permissionLevels).slice(0)
       },
       async getUser(){
-         let validToken = (this.token)? this.token: null
-          if (!validToken ){ 
-            validToken = this.getToken()
-          }
-           
-          if (!validToken ){
-            this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
-            return
-          }  
+       let validToken = (this.token)? this.token: null
+        if (!validToken ){ 
+          validToken = this.getToken()
+        }
+         
+        if (!validToken ){
+          this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
+          return
+        }  
         
         await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/'+this.myIDis(validToken), {
           method: 'GET',
@@ -163,6 +163,7 @@
           
           //{error: "Need to pass a valid token"} 403
           if (data.error  &&  data.error == "Need to pass a valid token"){
+            localStorage.removeItem("LoggedUser"); 
             this.$router.push({ name: 'Login',params:{ msg: "Please reLogin"}   });
             return
           }  
