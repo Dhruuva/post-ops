@@ -21,13 +21,13 @@ v-main.grey.lighten-3
           v-card-actions
             v-row(align="center" justify="center")
               v-btn-toggle(v-model='text' tile color='deep-purple accent-3' group)
-                v-btn(icon href='http://localhost:5000/api/auth/google' )
+                v-btn(icon href=process.env.VUE_APP_BACKEND_URL+'api/auth/google' @click.end='loading=true' )
                   v-icon mdi-google
-                v-btn(icon href='http://localhost:5000/api/auth/mailru')
+                v-btn(icon href=process.env.VUE_APP_BACKEND_URL+'api/auth/mailru' @click.end='loading=true')
                   v-icon mdi-at
-                v-btn(icon href='http://localhost:5000/api/auth/github')
+                v-btn(icon href=process.env.VUE_APP_BACKEND_URL+'api/auth/github' @click='loading=true')
                   v-icon mdi-github 
-                v-btn(icon href='http://localhost:5000/api/auth/facebook' disabled)
+                v-btn(icon href=process.env.VUE_APP_BACKEND_URL+'api/auth/facebook' disabled)
                   v-icon mdi-facebook  
           v-divider            
           v-card-actions 
@@ -40,7 +40,12 @@ v-main.grey.lighten-3
             v-card-title( class="headline")  {{ error.msg }}
             v-card-text {{error.dtl }}
             v-card-actions 
-              v-btn.secondary.lighten-3( @click.stop='errorDlg=false'  ) Close       
+              v-btn.secondary.lighten-3( @click.stop='errorDlg=false'  ) Close 
+      v-dialog(v-model='loading'  persistent width='300')
+        v-card(color='primary lighten-3')
+          v-card-text
+            | Please stand by
+            v-progress-linear.mb-0(indeterminate color='white')               
            
 </template>
 
@@ -51,6 +56,7 @@ v-main.grey.lighten-3
     data: () => ({
       error:{msg:'',dtl:'.'},
       errorDlg: false,
+      loading: false,
       show: false,
       text: "Ole",
       name: "todhruva@mail.ru",
@@ -70,8 +76,8 @@ v-main.grey.lighten-3
     },
     methods: {
       async login (){
-        
-        await fetch('http://localhost:5000/api/auth/login', {
+        this.loading=true
+        await fetch(process.env.VUE_APP_BACKEND_URL+'api/auth/login', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -97,6 +103,7 @@ v-main.grey.lighten-3
           this.$router.push({ name: 'Welcome',params:{ token: data.token}   });
         })
         .catch((error) => {
+          this.loading=false
           this.error = {msg:'Bad user ID or password',dtl:"please try again"}
           this.errorDlg=true
           return error

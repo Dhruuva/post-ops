@@ -18,7 +18,12 @@
                 div
                   v-chip.primary.lighten-3(  close close-icon="mdi-printer" color="blue"
                   link  outlined) Posts 
-                  v-chip.red( link  outlined) {{post}}   
+                  v-chip.red( link  outlined) {{post}} 
+    v-dialog(v-model='loading' hide-overlay persistent width='300')
+      v-card(color='primary lighten-3')
+        v-card-text
+          | Please stand by
+          v-progress-linear.mb-0(indeterminate color='white')                
 </template>
 
 <script>
@@ -35,6 +40,7 @@
       name: 'Home',
       users: 0,
       post: 0,
+      loading: false
      
     }),
     mounted(){
@@ -47,6 +53,7 @@
     },
     methods:{
       async getAllUser(){
+        this.loading=true
         await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/total', {
             method: 'GET',
             headers: {
@@ -61,11 +68,11 @@
             .then(data => {
               console.log(data.result,' Post add Success:', data);
               this.users=data.result
-            
-
+              this.loading=false
             })
             .catch((error) => {
               console.error('Post Error:', error);
+              this.loading=false
              
         });
       },

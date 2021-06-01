@@ -23,13 +23,13 @@ v-main.grey.lighten-2
         v-card-actions
           v-row(align="center" justify="center")
             v-btn-toggle.mt-n3( tile color='deep-purple accent-3' group)
-              v-btn(icon href='http://localhost:5000/api/auth/google' )
+              v-btn(icon href=process.env.VUE_APP_BACKEND_URL+'api/auth/google' )
                 v-icon mdi-google
-              v-btn(icon href='http://localhost:5000/api/auth/mailru')
+              v-btn(icon href=process.env.VUE_APP_BACKEND_URL+'api/auth/mailru')
                 v-icon mdi-at
-              v-btn(icon href='http://localhost:5000/api/auth/github')
+              v-btn(icon href=process.env.VUE_APP_BACKEND_URL+'api/auth/github')
                 v-icon mdi-github 
-              v-btn(icon href='http://localhost:5000/api/auth/facebook')
+              v-btn(icon href=process.env.VUE_APP_BACKEND_URL+'api/auth/facebook' disabled)
                 v-icon mdi-facebook  
     v-row( align="center" justify="center" style="height:50vh" no-gutters dense)
       v-dialog.pa-2(v-model="errorDlg"  max-width="490" )

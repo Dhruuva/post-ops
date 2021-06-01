@@ -48,18 +48,16 @@ require("./config/passport")(passport);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postsRouter);
-// Bodyparser middleware
 
-// app.use(
-//   bodyParser.urlencoded({
-//     extended: false
-//   })
-// );
-// app.use(bodyParser.json());
+app.get("/favicon.ico", (req, res) => {
+  res.end();
+  console.log("favicon requested");
+  return;
+});
 
 app.get("/api/version", (req, res) => {
   res.send({restApi:"post-ops: v1.0.0"})
-  return;
+ 
 });
 const port = process.env.PORT || 5000;
 

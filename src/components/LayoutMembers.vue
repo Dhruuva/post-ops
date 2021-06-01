@@ -65,7 +65,7 @@ export default {
 
       localStorage.removeItem("LoggedUser"); 
       if (this.$route.name!=="Home"){
-        this.$router.push({ name: 'Home',params:{ msg: `Bay.. ${this.userName}`}   }); 
+        this.$router.push({ name: 'Home',params:{ msg: `Bye.. ${this.userName}`}   }); 
       } else{
         this.$router.go(this.$router.currentRoute)
       }
