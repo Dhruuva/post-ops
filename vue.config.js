@@ -3,7 +3,7 @@
 module.exports = {
     parallel: false,
     outputDir: 'docs',
-    publicPath: process.env.NODE_ENV === "production" ? "/post-ops/" : "/liquid-trader",
+    publicPath: process.env.NODE_ENV === "production" ? "/post-ops/" : "/post-ops/",
 
     "devServer": {
 		"port": 8383
