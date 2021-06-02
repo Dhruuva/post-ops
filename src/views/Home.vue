@@ -3,7 +3,7 @@
     v-container
       v-row.pa-5(justify="space-around")
         v-banner.pa-2.green.accent-2.rounded-xl(width="100%"  v-if="msg" single-line class="font-weight-bold"  elevation="9"  icon="mdi-human-greeting") {{msg}}
-        v-sheet.mt-10.rounded-xl( width="100%"  height="90"  elevation="5" )
+        v-sheet.mt-10.rounded-xl( width="100%"  :height="height"  elevation="5" )
           div.text-h3.mt-5(class="text-center indigo--text text--darken-6 font-weight-medium" ) Best publisher service !
         v-row.mt-2(justify="space-around")
           v-col( cols="12" sm="6")
@@ -51,12 +51,21 @@
      
     }),
     mounted(){
+      console.log(this.$vuetify.breakpoint.name)
       this.getAllUser()
       this.allPost()
     },
-    components: {
-      
-     
+    computed: {
+      height () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 130 
+          case 'sm': return 130
+          case 'md': return 90
+          case 'lg': return 90
+          case 'xl': return 90
+          default: return 90
+        }
+      },
     },
     methods:{
       async getAllUser(){
