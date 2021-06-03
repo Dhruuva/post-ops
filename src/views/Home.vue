@@ -51,7 +51,7 @@
      
     }),
     mounted(){
-      console.log(this.$vuetify.breakpoint.name)
+      console.log("process.env.VUE_APP_VERSION ",process.env.VUE_APP_VERSION)
       this.getAllUser()
       this.allPost()
     },

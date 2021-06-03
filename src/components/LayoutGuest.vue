@@ -1,6 +1,7 @@
 <template lang='pug'>
 v-app#layoutGuest
   v-app-bar(app)
+
     v-app-bar-nav-icon(@click='drawer = !drawer')
     v-toolbar-title Publish
     v-spacer
@@ -10,6 +11,7 @@ v-app#layoutGuest
       v-icon mdi-text-search
     v-btn(icon disabled)
       v-icon mdi-dots-vertical  
+    v-chip.float-right.info( class="ma-2" x-small) v  {{appVersion}}
   v-navigation-drawer(v-model='drawer' fixed temporary)
     v-list-item
       v-list-item-content
@@ -37,6 +39,11 @@ export default {
     drawer: false,
     group: null,
  }),
+  computed: {
+      appVersion () {
+        return process.env.VUE_APP_VERSION
+      }
+  }
 }
 </script>
 <style lang="stylus">
