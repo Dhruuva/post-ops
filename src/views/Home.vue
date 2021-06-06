@@ -71,9 +71,11 @@
         if (url.length == 2){
           let vars = url[1].split('&');
           let tmp = vars[0].split('=');
-          if (tmp[0]=='token' && tmp.length==2 ){
-
-             console.log(" Token in url is  url= ",tmp[1]);
+          let tmp1 = vars[1].split('=');
+          if (tmp[0]=='token' && tmp.length==2  && tmp1[0]=='refresh_token' && tmp1.length==2){
+            console.log(tmp1[1] ," Token in url is  url= ",tmp[1]);
+            this.saveTokens('Bearer '+ tmp[1],tmp1[1]);
+            this.$router.push({ name: 'Welcome',params:{ token: 'Bearer '+ tmp[1]}   });
           }
         }
     },
