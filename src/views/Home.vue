@@ -57,11 +57,21 @@
       let q = this.$route.query.token
       let qq = this.$route.query.refresh_token
       
-      console.log(qq,"tokens .....",q)
+      console.log(qq,"tokens .....",this.$route.query)
       if (q && qq){
         this.saveTokens('Bearer '+ q,qq);
         this.$router.push({ name: 'Welcome',params:{ token: 'Bearer '+ q}   });
       }
+
+      let uri = window.location.search.substring(1); 
+      let params = new URLSearchParams(uri);
+      console.log(" uri params= ",params.get("token"));
+
+       let url = window.location.href.split('?');
+        if (url.length == 2){
+           let vars = url[1].split('&');
+           console.log(" url= ",vars);
+        }
     },
     computed: {
       height () {
