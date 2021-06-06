@@ -43,7 +43,7 @@ const routes = [
   {
     path: '/signup',
     name: 'SignUP',
-    component: () => import(/* webpackChunkName: "about" */ '../views/SignUP.vue'),
+    component: () => import(/* webpackChunkName: "signup" */ '../views/SignUP.vue'),
     meta: {
        visible: false,
        title: 'SignUP',
@@ -54,7 +54,7 @@ const routes = [
     path: '/welcome',
     name: 'Welcome',
     beforeEnter : guardMyroute,
-    component: () => import(/* webpackChunkName: "about" */ '../views/Welcome.vue'),
+    component: () => import(/* webpackChunkName: "welcome" */ '../views/Welcome.vue'),
     props: true,
     meta: {
        visible: false,
@@ -66,7 +66,7 @@ const routes = [
     path: '/post',
     name: 'Post',
     beforeEnter : guardMyroute,
-    component: () => import(/* webpackChunkName: "about" */ '../views/Post.vue'),
+    component: () => import(/* webpackChunkName: "post" */ '../views/Post.vue'),
     props: true,
     meta: {
        visible: false,

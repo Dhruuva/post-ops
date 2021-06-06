@@ -34,7 +34,7 @@
 </template>
 
 <script>
-
+  import jwt_decode from "jwt-decode";
   
   export default {
     props: {
@@ -69,8 +69,12 @@
 
        let url = window.location.href.split('?');
         if (url.length == 2){
-           let vars = url[1].split('&');
-           console.log(" url= ",vars);
+          let vars = url[1].split('&');
+          let tmp = vars[0].split('=');
+          if (tmp[0]=='token' && tmp.length==2 ){
+
+             console.log(" Token in url is  url= ",tmp[1]);
+          }
         }
     },
     computed: {
@@ -86,6 +90,10 @@
       },
     },
     methods:{
+      saveTokens(token,uJwt){
+        let u =(token.split(' ').length>1)? jwt_decode(token.split(' ')[1]):jwt_decode(token);
+        localStorage.setItem('LoggedUser',JSON.stringify({jwt:token,uJwt:uJwt,user:u}));
+      },
       async getAllUser(){
         this.loading=true
         await fetch(process.env.VUE_APP_BACKEND_URL+'api/users/total', {
