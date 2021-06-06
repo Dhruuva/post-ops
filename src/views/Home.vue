@@ -51,9 +51,17 @@
      
     }),
     mounted(){
-      console.log("process.env.VUE_APP_VERSION ",process.env.VUE_APP_VERSION)
+     
       this.getAllUser()
       this.allPost()
+      let q = this.$route.query.token
+      let qq = this.$route.query.refresh_token
+      
+      console.log(qq,"tokens .....",q)
+      if (q && qq){
+        this.saveTokens('Bearer '+ q,qq);
+        this.$router.push({ name: 'Welcome',params:{ token: 'Bearer '+ q}   });
+      }
     },
     computed: {
       height () {
