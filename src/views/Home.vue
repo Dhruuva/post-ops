@@ -54,30 +54,18 @@
      
       this.getAllUser()
       this.allPost()
-      let q = this.$route.query.token
-      let qq = this.$route.query.refresh_token
-      
-      console.log(qq,"tokens .....",this.$route.query)
-      if (q && qq){
-        this.saveTokens('Bearer '+ q,qq);
-        this.$router.push({ name: 'Welcome',params:{ token: 'Bearer '+ q}   });
-      }
-
-      let uri = window.location.search.substring(1); 
-      let params = new URLSearchParams(uri);
-      console.log(" uri params= ",params.get("token"));
-
-       let url = window.location.href.split('?');
-        if (url.length == 2){
-          let vars = url[1].split('&');
-          let tmp = vars[0].split('=');
-          let tmp1 = vars[1].split('=');
-          if (tmp[0]=='token' && tmp.length==2  && tmp1[0]=='refresh_token' && tmp1.length==2){
-            console.log(tmp1[1] ," Token in url is  url= ",tmp[1]);
-            this.saveTokens('Bearer '+ tmp[1],tmp1[1]);
-            this.$router.push({ name: 'Welcome',params:{ token: 'Bearer '+ tmp[1]}   });
-          }
+      console.log("process.env.VUE_APP_VERSION ",process.env.VUE_APP_VERSION)
+      let url = window.location.href.split('?');
+      if (url.length == 2){
+        let vars = url[1].split('&');
+        let tmp = vars[0].split('=');
+        let tmp1 = vars[1].split('=');
+        if (tmp[0]=='token' && tmp.length==2  && tmp1[0]=='refresh_token' && tmp1.length==2){
+          console.log(tmp1[1] ," Token in url is  url= ",tmp[1]);
+          this.saveTokens('Bearer '+ tmp[1],tmp1[1]);
+          this.$router.push({ name: 'Welcome',params:{ token: 'Bearer '+ tmp[1]}   });
         }
+      }
     },
     computed: {
       height () {
