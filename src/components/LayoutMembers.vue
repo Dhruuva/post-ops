@@ -2,16 +2,16 @@
 v-app(id="layoutMembers")
   v-system-bar(app )
     v-spacer
-    v-chip(class="text-center indigo--text text--darken-6 font-weight-medium" small) {{msg}}
+    v-chip(class="text-center indigo--text text--darken-4 font-weight-medium" small) {{msg}}
   v-app-bar(app)
-    v-app-bar-nav-icon(@click='drawer = !drawer' class="text-center indigo--text text--darken-6 font-weight-medium")
-    v-toolbar-title(class="text-center indigo--text text--darken-6 font-weight-medium") Publish
+    v-app-bar-nav-icon(@click='drawer = !drawer' class="text-center indigo--text text--darken-4 font-weight-medium")
+    v-toolbar-title(class="text-center indigo--text text--darken-4 font-weight-medium") Publish
     v-spacer
-    v-btn.pa-7(icon value='login' to="/welcome" outlined class="text-center indigo--text text--darken-6 font-weight-medium" )
+    v-btn.pa-7(icon value='login' to="/welcome" outlined class="text-center indigo--text text--darken-4 font-weight-medium" )
       v-avatar(size=50)  
         v-img( :src="photo" alt='Avatar')
     v-btn(icon value='login' @click='logout')
-      v-icon(class="indigo--text text--darken-6 font-weight-medium") mdi-logout
+      v-icon(class="indigo--text text--darken-4 font-weight-medium") mdi-logout
       
   v-navigation-drawer(v-model='drawer' fixed temporary)
     v-list-item
