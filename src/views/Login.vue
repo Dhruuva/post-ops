@@ -59,8 +59,8 @@ v-main.grey.lighten-3
       loading: false,
       show: false,
       text: "Ole",
-      name: "todhruva@mail.ru",
-      pwd: "qwerexQ1"
+      name: "",
+      pwd: ""
     }),
   
     mounted() {
