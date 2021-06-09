@@ -25,7 +25,7 @@ cd post-ops/server
 npm install
 cp .env.example .env
 ```
-**MONGO_URI** Specify the connection string  to mongoDB local (mongodb://localhost:27017/databaseName) or cloud instance (mongodb+srv://user:myPassword@MyHost.mqvce.mongodb.net/databaseName?retryWrites=true&w=majority). So poin it in your .env
+**MONGO_URI** Specify the connection string  to mongoDB local (mongodb://localhost:27017/databaseName) or cloud instance (mongodb+srv://<user>:<password>@myHost.mqvce.mongodb.net/databaseName?retryWrites=true&w=majority). So poin it in your .env
 
 **Creating an OAuth App**
 Create any one in a couple minutes 
