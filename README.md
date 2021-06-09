@@ -25,7 +25,7 @@ cd post-ops/server
 npm install
 cp .env.example .env
 ```
-**MONGO_URI** Specify the connection string  to mongoDB local (mongodb://localhost:27017/myMongo) or cloud instance (mongodb+srv://user:myPassword@MyHost.mqvce.mongodb.net/myDatabase?retryWrites=true&w=majority). So poin it in your .env
+**MONGO_URI** Specify the connection string  to mongoDB local (mongodb://localhost:27017/databaseName) or cloud instance (mongodb+srv://user:myPassword@MyHost.mqvce.mongodb.net/databaseName?retryWrites=true&w=majority). So poin it in your .env
 
 **Creating an OAuth App**
 Create any one in a couple minutes 
@@ -47,11 +47,18 @@ Server will start and you can test in browser typing http://localhost:5000/api/v
 
 # Client 
 I recomend install Vue Cli globaly before next steps https://cli.vuejs.org/guide/installation.html
+
 ```
 cd post-ops
 npm install
 cp .env.example .env
 ```
+To ensure all done a proper way run test
+
+```
+npm run test:unit
+```
+
 in .env file in root folder write
 ```
 VUE_APP_BACKEND_URL=http://localhost:5000/
@@ -64,5 +71,12 @@ npm run serve
 ```
 Vue show You client url in your terminal.
 
+# Credits
 
+This project has been largely inspired by two work :
+https://github.com/valentinchelle/nodejs-rest-api-boilerplate
+https://github.com/madhums/node-express-mongoose-demo
 
+## License
+
+MIT

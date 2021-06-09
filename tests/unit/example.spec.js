@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import { createLocalVue, mount } from '@vue/test-utils'
-import Home from '@/views/Home'
+import About from '@/views/About'
 import Vuetify from 'vuetify'
 Vue.config.silent = true;
-describe('Home.vue', () => {
+describe('About.vue', () => {
 	const localVue = createLocalVue()
     let vuetify
-
+	let $vuetify
      beforeEach(() => {
 	    vuetify = new Vuetify()
+	    $vuetify = new Vuetify()
 	 })
 
-	 it('Home.vue is work', () => {
+	 it('About.vue is work', () => {
 	    
-	    const wrapper = mount(Home, {
+	    const wrapper = mount(About, {
 	    	localVue,
-     		vuetify
+     		vuetify,
+     		$vuetify
 
 	    })
 
