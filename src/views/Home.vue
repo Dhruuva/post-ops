@@ -133,20 +133,18 @@
 
 <style scoped lang='stylus'>
   .titleBig
-    text-shadow: 0 -.1em .2em darkgreen;
-    font-size:3.9em !important
-    color indigo
-    font-stretch: expanded
-    font-family Jazz LET, fantasy !important
+    text-shadow  0 -.1em .2em darkgreen
+    font-size 2.9em 
+    font-stretch expanded
+    font-family "Jazz LET",fantasy,serif 
     letter-spacing 10px !important
     font-weight 900 !important
     
   .titleNormal
-    text-shadow: 0 -.1em .2em #ffbac4;
+    text-shadow  0 -.1em .2em #ffbac4;
     font-size 1.2em 
-    color lime
     font-stretch expanded
     font-variant small-caps 
-    font-family Jazz LET, fantasy !important 
+    font-family "Jazz LET",fantasy,serif  
 </style>
 
